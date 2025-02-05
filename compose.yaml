@@ -7,7 +7,7 @@ services:
       - 'POSTGRES_PASSWORD=secret'
       - 'PGDATA=/var/lib/postgresql/data/pgdata'
     volumes:
-      - ./docker-data/tasks-db:/var/lib/postgresql/data
+      - ./docker-data/db:/var/lib/postgresql/data
 
     ports:
       - '5432:5432'
