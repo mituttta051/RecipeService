@@ -29,6 +29,6 @@ CREATE TABLE IF NOT EXISTS tag (
     id INT NOT NULL,
     space_id INT NOT NULL,
     name VARCHAR(255) NOT NULL,
-    values TEXT[] NOT NULL,
+    values VARCHAR[] NOT NULL,
     PRIMARY KEY (id, space_id)
 ); 
