@@ -1,13 +1,40 @@
 package cybercooker.recipeservice;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.util.ResourceUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 @SpringBootApplication
-public class RecipeServiceApplication {
+public class RecipeServiceApplication implements CommandLineRunner {
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+    
+    private static final Logger log = LoggerFactory.getLogger(RecipeServiceApplication.class);
 
     public static void main(String[] args) {
         SpringApplication.run(RecipeServiceApplication.class, args);
     }
+    
+    @Override
+    public void run(String... args) throws Exception {
+        log.info("Creating tables");
+        executeSqlFromFile();
 
+        log.info("Tables created");
+    }
+
+    private void executeSqlFromFile() throws IOException {
+        File file = ResourceUtils.getFile("classpath:db/init.sql");
+        String sql = new String(Files.readAllBytes(file.toPath()));
+        jdbcTemplate.execute(sql);
+    }
 }
