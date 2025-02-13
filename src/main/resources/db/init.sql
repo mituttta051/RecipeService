@@ -62,6 +62,9 @@ DECLARE
     new_id INT;
 BEGIN
     EXECUTE format('UPDATE %I SET last_id = last_id + 1 WHERE space_id = $1 RETURNING last_id', table_name) INTO new_id USING space_id;
+    IF new_id IS NULL THEN
+        EXECUTE format('INSERT INTO %I (space_id, last_id) VALUES ($1, 1) RETURNING last_id', table_name) INTO new_id USING space_id;
+    END IF;
     RETURN new_id;
 END;
 $$ LANGUAGE plpgsql;
