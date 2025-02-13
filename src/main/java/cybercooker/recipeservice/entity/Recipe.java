@@ -1,6 +1,5 @@
 package cybercooker.recipeservice.entity;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,5 +15,5 @@ public class Recipe {
     List<Integer> ingredients;
     int servingsNumber;
     int cookTime;
-    private JsonNode tags;
+    private List<Property> tags;
 }
