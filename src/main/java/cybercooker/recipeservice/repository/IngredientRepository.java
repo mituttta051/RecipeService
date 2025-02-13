@@ -9,15 +9,17 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class IngredientRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public Ingredient getById(int id) throws NotFoundException {
-        String sql = "SELECT * FROM ingredients WHERE id = ?";
+    public Ingredient getById(int id, int spaceId) throws NotFoundException {
+        String sql = "SELECT * FROM ingredient WHERE id = ? AND space_id = ?";
         try {
-            return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> Ingredient.builder()
+            return jdbcTemplate.queryForObject(sql, new Object[]{id, spaceId}, (rs, rowNum) -> Ingredient.builder()
                     .id(rs.getInt("id"))
                     .spaceId(rs.getInt("space_id"))
                     .name(rs.getString("name"))
@@ -28,9 +30,27 @@ public class IngredientRepository {
             throw new RuntimeException(e);
         }
     }
+    public List<Ingredient> getAllBySpaceId(int spaceId) throws NotFoundException {
+        // check whether space_id exists
+        String checkSql = "SELECT * FROM last_ingredient_id WHERE space_id = ?";
+        try {
+            jdbcTemplate.queryForObject(checkSql, new Object[]{spaceId}, (rs, rowNum) -> rs.getInt("space_id"));
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException("Space with id " + spaceId + " not found");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        String sql = "SELECT * FROM ingredient WHERE space_id = ?";
+        
+        return jdbcTemplate.query(sql, new Object[]{spaceId}, (rs, rowNum) -> Ingredient.builder()
+                .id(rs.getInt("id"))
+                .spaceId(rs.getInt("space_id"))
+                .name(rs.getString("name"))
+                .build());
+    }
 
     public void save(Ingredient ingredient) throws AlreadyExistsException {
-        String sql = "INSERT INTO ingredients (space_id, name) VALUES (?, ?)";
+        String sql = "INSERT INTO ingredient (space_id, name) VALUES (?, ?)";
         try {
             jdbcTemplate.update(sql, ingredient.getSpaceId(), ingredient.getName());
         } catch (DuplicateKeyException e) {
@@ -41,26 +61,28 @@ public class IngredientRepository {
     }
 
     public void update(Ingredient ingredient) throws NotFoundException, AlreadyExistsException {
-        String sql = "UPDATE ingredients SET space_id = ?, name = ? WHERE id = ?";
+        String sql = "UPDATE ingredient SET space_id = ?, name = ? WHERE id = ?";
         try {
-            getById(ingredient.getId());
-            jdbcTemplate.update(sql, ingredient.getSpaceId(), ingredient.getName(), ingredient.getId());
-        } catch (NotFoundException e) {
-            throw new NotFoundException("Ingredient with id " + ingredient.getId() + " not found");
+            int numOfRows = jdbcTemplate.update(sql, ingredient.getSpaceId(), ingredient.getName(), ingredient.getId());
+            if (numOfRows == 0) {
+                throw new NotFoundException("Ingredient with id " + ingredient.getId() + " not found");
+            }
         } catch (DuplicateKeyException e) {
             throw new AlreadyExistsException("Ingredient with name " + ingredient.getName() + " already exists in space " + ingredient.getSpaceId());
         }
     }
 
-    public void delete(int id) throws NotFoundException {
-        String sql = "DELETE FROM ingredients WHERE id = ?";
+    public void delete(int id, int spaceId) throws NotFoundException {
+        String sql = "DELETE FROM ingredient WHERE id = ? AND space_id = ?";
         try {
-            getById(id);
-            jdbcTemplate.update(sql, id);
-        } catch (NotFoundException e) {
-            throw new NotFoundException("Ingredient with id " + id + " not found");
+            int numOfRows = jdbcTemplate.update(sql, id, spaceId);
+            if (numOfRows == 0) {
+                throw new NotFoundException("Ingredient with id " + id + " not found");
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+    
+    
 }
