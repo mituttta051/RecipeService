@@ -6,7 +6,7 @@ BEGIN
     END IF;
 END
 $$;
-
+CREATE EXTENSION IF NOT EXISTS hstore;
 -- Create the recipes table
 CREATE TABLE IF NOT EXISTS recipe (
     id INT NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS tag (
     id INT NOT NULL,
     space_id INT NOT NULL,
     name VARCHAR(32) NOT NULL,
-    values VARCHAR(64)[] NOT NULL,
+    values hstore NOT NULL,
     PRIMARY KEY (id, space_id),
     UNIQUE (space_id, name)
 );

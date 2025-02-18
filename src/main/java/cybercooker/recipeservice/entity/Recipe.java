@@ -8,12 +8,19 @@ import java.util.List;
 @Data
 @Builder
 public class Recipe {
+    @Data
+    @Builder
+    static class Tag {
+        private Integer id;
+        private List<Integer> values;
+    }
+    
     private int id;
-    int spaceId;
-    String name;
-    String description;
-    List<Integer> ingredients;
-    int servingsNumber;
-    int cookTime;
-    private List<Property> tags;
+    private int spaceId;
+    private String name;
+    private String description;
+    private List<Integer> ingredients;
+    private int servingsNumber;
+    private int cookTime;
+    private List<Tag> tags;
 }

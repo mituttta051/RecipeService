@@ -19,34 +19,26 @@ public class IngredientRepository {
     public Ingredient getById(int id, int spaceId) throws NotFoundException {
         String sql = "SELECT * FROM ingredient WHERE id = ? AND space_id = ?";
         try {
-            return jdbcTemplate.queryForObject(sql, new Object[]{id, spaceId}, (rs, rowNum) -> Ingredient.builder()
+            return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> Ingredient.builder()
                     .id(rs.getInt("id"))
                     .spaceId(rs.getInt("space_id"))
                     .name(rs.getString("name"))
-                    .build());
+                    .build(), id, spaceId);
         } catch (EmptyResultDataAccessException e) {
             throw new NotFoundException("Ingredient with id " + id + " not found");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
     public List<Ingredient> getAllBySpaceId(int spaceId) throws NotFoundException {
-        // check whether space_id exists
-        String checkSql = "SELECT * FROM last_ingredient_id WHERE space_id = ?";
-        try {
-            jdbcTemplate.queryForObject(checkSql, new Object[]{spaceId}, (rs, rowNum) -> rs.getInt("space_id"));
-        } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException("Space with id " + spaceId + " not found");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
         String sql = "SELECT * FROM ingredient WHERE space_id = ?";
-        
-        return jdbcTemplate.query(sql, new Object[]{spaceId}, (rs, rowNum) -> Ingredient.builder()
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> Ingredient.builder()
                 .id(rs.getInt("id"))
                 .spaceId(rs.getInt("space_id"))
                 .name(rs.getString("name"))
-                .build());
+                .build(), spaceId);
     }
 
     public void save(Ingredient ingredient) throws AlreadyExistsException {
@@ -83,6 +75,6 @@ public class IngredientRepository {
             throw new RuntimeException(e);
         }
     }
-    
-    
+
+
 }
