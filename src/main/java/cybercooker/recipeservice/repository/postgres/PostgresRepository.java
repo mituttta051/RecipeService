@@ -89,15 +89,10 @@ public abstract class PostgresRepository<T> extends Repository<T> {
     @Override
     public void delete(int id, int spaceId) throws NotFoundException {
         String sql = generateDeleteQuery();
-        try {
-            int numOfRows = jdbcTemplate.update(sql, id, spaceId);
-            if (numOfRows == 0) {
-                throw new NotFoundException(getTableName() + " with id " + id + " not found");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        int numOfRows = jdbcTemplate.update(sql, id, spaceId);
+        if (numOfRows == 0) {
+            throw new NotFoundException(getTableName() + " with id " + id + " not found");
         }
-
     }
 
     @FunctionalInterface
