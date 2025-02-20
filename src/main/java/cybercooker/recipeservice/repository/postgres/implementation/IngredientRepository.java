@@ -49,21 +49,6 @@ public class IngredientRepository extends PostgresRepository<Ingredient> {
     }
 
     @Override
-    protected int getId(Ingredient ingredient) {
-        return ingredient.getId();
-    }
-
-    @Override
-    protected int getSpaceId(Ingredient ingredient) {
-        return ingredient.getSpaceId();
-    }
-
-    @Override
-    protected String getName(Ingredient ingredient) {
-        return ingredient.getName();
-    }
-
-    @Override
     protected ParamsExtractor<Ingredient> getSaveParamsExtractor() {
         return ingredient -> new Object[]{ingredient.getSpaceId(), ingredient.getName()};
     }

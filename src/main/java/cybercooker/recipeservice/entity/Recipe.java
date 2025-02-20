@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class Recipe {
+public class Recipe implements SpacedEntity {
     private int id;
     private int spaceId;
     private String name;
@@ -22,5 +22,18 @@ public class Recipe {
     static class Tag {
         private Integer id;
         private List<Integer> values;
+    }
+    
+    @Override
+    public String toString() {
+        return "Recipe: " +
+                "id=" + id +
+                ", spaceId=" + spaceId +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", ingredients=" + ingredients +
+                ", servingsNumber=" + servingsNumber +
+                ", cookTime=" + cookTime +
+                ", tags=" + tags;
     }
 }
