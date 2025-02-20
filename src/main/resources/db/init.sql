@@ -1,11 +1,3 @@
--- Create the database
-DO $$
-BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = 'recipe-db') THEN
-        PERFORM dblink_exec('dbname=postgres', 'CREATE DATABASE "recipe-db"');
-    END IF;
-END
-$$;
 CREATE EXTENSION IF NOT EXISTS hstore;
 -- Create the recipes table
 CREATE TABLE IF NOT EXISTS recipe (
