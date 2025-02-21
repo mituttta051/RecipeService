@@ -3,7 +3,7 @@ package cybercooker.recipeservice;
 import cybercooker.recipeservice.entity.Ingredient;
 import cybercooker.recipeservice.exception.AlreadyExistsException;
 import cybercooker.recipeservice.exception.NotFoundException;
-import cybercooker.recipeservice.repository.postgres.implementation.IngredientRepository;
+import cybercooker.recipeservice.repository.postgres.implementation.IngredientRepositoryPostgres;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @SpringBootTest(classes = RecipeServiceApplication.class)
 public class IngredientRepositoryTests extends RepositoryTests {
     @Autowired
-    private IngredientRepository ingredientRepository;
+    private IngredientRepositoryPostgres ingredientRepository;
 
 
     @BeforeEach

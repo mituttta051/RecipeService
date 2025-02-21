@@ -3,7 +3,7 @@ package cybercooker.recipeservice;
 import cybercooker.recipeservice.entity.Tag;
 import cybercooker.recipeservice.exception.AlreadyExistsException;
 import cybercooker.recipeservice.exception.NotFoundException;
-import cybercooker.recipeservice.repository.postgres.implementation.TagRepository;
+import cybercooker.recipeservice.repository.postgres.implementation.TagRepositoryPostgres;
 import cybercooker.recipeservice.repository.postgres.utils.TagUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @SpringBootTest(classes = RecipeServiceApplication.class)
 public class TagRepositoryTests extends RepositoryTests {
     @Autowired
-    private TagRepository tagRepository;
+    private TagRepositoryPostgres tagRepository;
 
     @BeforeEach
     void setUp() {

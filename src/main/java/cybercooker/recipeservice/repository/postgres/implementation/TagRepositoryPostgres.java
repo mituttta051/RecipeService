@@ -1,13 +1,14 @@
 package cybercooker.recipeservice.repository.postgres.implementation;
 
 import cybercooker.recipeservice.entity.Tag;
+import cybercooker.recipeservice.repository.interfaces.TagRepository;
 import cybercooker.recipeservice.repository.postgres.PostgresRepository;
 import cybercooker.recipeservice.repository.postgres.utils.TagUtils;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TagRepository extends PostgresRepository<Tag> {
+public class TagRepositoryPostgres extends PostgresRepository<Tag> implements TagRepository {
     @Override
     protected RowMapper<Tag> rowMapper() {
         return (rs, rowNum) -> Tag.builder()

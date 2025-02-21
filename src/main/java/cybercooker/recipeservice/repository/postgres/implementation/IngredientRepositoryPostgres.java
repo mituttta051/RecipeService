@@ -1,12 +1,13 @@
 package cybercooker.recipeservice.repository.postgres.implementation;
 
 import cybercooker.recipeservice.entity.Ingredient;
+import cybercooker.recipeservice.repository.interfaces.IngredientRepository;
 import cybercooker.recipeservice.repository.postgres.PostgresRepository;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class IngredientRepository extends PostgresRepository<Ingredient> {
+public class IngredientRepositoryPostgres extends PostgresRepository<Ingredient> implements IngredientRepository {
 
 
     @Override

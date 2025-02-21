@@ -47,7 +47,7 @@ public abstract class PostgresRepository<T extends SpacedEntity> {
         }
     }
 
-    public List<T> getAllBySpaceId(int spaceId) throws NotFoundException {
+    public List<T> getAllBySpaceId(int spaceId) {
         String sql = generateGetAllBySpaceIdQuery();
         return jdbcTemplate.query(sql, rowMapper(), spaceId);
     }
@@ -79,7 +79,7 @@ public abstract class PostgresRepository<T extends SpacedEntity> {
         }
 
     }
-    
+
     public void delete(int id, int spaceId) throws NotFoundException {
         String sql = generateDeleteQuery();
         int numOfRows = jdbcTemplate.update(sql, id, spaceId);
