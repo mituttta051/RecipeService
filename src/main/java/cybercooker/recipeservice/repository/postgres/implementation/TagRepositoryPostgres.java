@@ -51,12 +51,20 @@ public class TagRepositoryPostgres extends PostgresRepository<Tag> implements Ta
 
     @Override
     protected ParamsExtractor<Tag> getSaveParamsExtractor() {
-        return tag -> new Object[]{tag.getSpaceId(), tag.getName(), TagUtils.mapAsHstore(tag.getValues())};
+        return tag -> new Object[]{
+                tag.getSpaceId(),
+                tag.getName(),
+                TagUtils.mapAsHstore(tag.getValues())
+        };
     }
 
     @Override
     protected ParamsExtractor<Tag> getUpdateParamsExtractor() {
-        return tag -> new Object[]{tag.getName(), TagUtils.mapAsHstore(tag.getValues()), tag.getId(), tag.getSpaceId()};
+        return tag -> new Object[]{
+                tag.getName(),
+                TagUtils.mapAsHstore(tag.getValues()),
+                tag.getId(),
+                tag.getSpaceId()};
     }
 
 }

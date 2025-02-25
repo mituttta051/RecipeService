@@ -62,7 +62,6 @@ public abstract class PostgresRepository<T extends SpacedEntity> {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public void update(T t) throws NotFoundException, AlreadyExistsException {

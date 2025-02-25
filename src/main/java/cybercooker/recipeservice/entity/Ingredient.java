@@ -9,7 +9,7 @@ public class Ingredient implements SpacedEntity {
     private int id;
     private int spaceId;
     private String name;
-    
+
     @Override
     public String toString() {
         return "Ingredient: " +
