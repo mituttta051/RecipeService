@@ -1,12 +1,4 @@
--- Create the database
-DO $$
-BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = 'recipe-db') THEN
-        PERFORM dblink_exec('dbname=postgres', 'CREATE DATABASE "recipe-db"');
-    END IF;
-END
-$$;
-
+CREATE EXTENSION IF NOT EXISTS hstore;
 -- Create the recipes table
 CREATE TABLE IF NOT EXISTS recipe (
     id INT NOT NULL,
@@ -35,7 +27,7 @@ CREATE TABLE IF NOT EXISTS tag (
     id INT NOT NULL,
     space_id INT NOT NULL,
     name VARCHAR(32) NOT NULL,
-    values VARCHAR(64)[] NOT NULL,
+    values hstore NOT NULL,
     PRIMARY KEY (id, space_id),
     UNIQUE (space_id, name)
 );
@@ -62,6 +54,9 @@ DECLARE
     new_id INT;
 BEGIN
     EXECUTE format('UPDATE %I SET last_id = last_id + 1 WHERE space_id = $1 RETURNING last_id', table_name) INTO new_id USING space_id;
+    IF new_id IS NULL THEN
+        EXECUTE format('INSERT INTO %I (space_id, last_id) VALUES ($1, 1) RETURNING last_id', table_name) INTO new_id USING space_id;
+    END IF;
     RETURN new_id;
 END;
 $$ LANGUAGE plpgsql;

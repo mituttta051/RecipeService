@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: RecipeService
+  datasource:
+    url: jdbc:postgresql://localhost:5432/recipe-db
+    username: admin
+    password: secret
