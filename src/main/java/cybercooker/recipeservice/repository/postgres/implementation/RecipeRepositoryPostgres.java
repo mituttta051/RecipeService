@@ -31,7 +31,7 @@ public class RecipeRepositoryPostgres extends PostgresRepository<Recipe> impleme
                     .spaceId(rs.getInt("space_id"))
                     .name(rs.getString("name"))
                     .description(rs.getString("description"))
-                    .ingredients(ListUtils.intArrayToList(rs.getArray("ingredients")))
+                    .ingredients(ListUtils.sqlArrayToList(rs.getArray("ingredients")))
                     .servingsNumber(rs.getInt("servings_number"))
                     .cookTime(rs.getInt("cook_time"))
                     .tags(tags)
