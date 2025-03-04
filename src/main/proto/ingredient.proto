@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "cybercooker.recipeservice.grpc";
+option java_outer_classname = "IngredientProto";
+
+import "google/protobuf/empty.proto";
+
+message IngredientCreateRequest {
+  int32 space_id = 1;
+  string name = 2;
+}
+
+message IngredientId {
+  int32 id = 1;
+  int32 space_id = 2; 
+}
+
+message IngredientGetAllIBySpaceIdRequest {
+  int32 space_id = 1;
+}
+
+
+message IngredientDTO {
+  int32 id = 1;
+  int32 space_id = 2;
+  string name = 3;
+}
+
+message IngredientListDTO {
+  repeated IngredientDTO ingredients = 1;
+}
+
+
+service IngredientService {
+  rpc GetIngredientById(IngredientId) returns (IngredientDTO);
+  rpc GetAllIngredientsBySpaceId(IngredientGetAllIBySpaceIdRequest) returns (IngredientListDTO);
+  rpc AddIngredient(IngredientCreateRequest) returns (google.protobuf.Empty);
+  rpc UpdateIngredient(IngredientDTO) returns (google.protobuf.Empty);
+  rpc DeleteIngredientById(IngredientId) returns (google.protobuf.Empty);
+}
