@@ -1,5 +1,9 @@
 package cybercooker.recipeservice;
 
+import cybercooker.recipeservice.grpc.interceptor.GlobalExceptionInterceptor;
+import cybercooker.recipeservice.grpc.service.IngredientGrpcService;
+import io.grpc.Server;
+import io.grpc.ServerBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +29,16 @@ public class RecipeServiceApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("Creating tables");
         executeSqlFromFile();
-        log.info("Tables created");
     }
 
     private void executeSqlFromFile() throws IOException {
+        log.info("Creating tables");
+        
         File file = ResourceUtils.getFile("classpath:db/init.sql");
         String sql = new String(Files.readAllBytes(file.toPath()));
         jdbcTemplate.execute(sql);
+        
+        log.info("Tables created");
     }
 }

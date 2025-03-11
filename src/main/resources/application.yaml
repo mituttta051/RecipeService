@@ -5,3 +5,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/recipe-db
     username: admin
     password: secret
+  grpc:
+    server:
+      servlet:
+        enabled: false

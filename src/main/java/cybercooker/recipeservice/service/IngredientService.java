@@ -11,22 +11,18 @@ import java.util.List;
 
 @Service
 public class IngredientService {
-    private final IngredientRepository ingredientRepository;
-
     @Autowired
-    public IngredientService(IngredientRepository ingredientRepository) {
-        this.ingredientRepository = ingredientRepository;
-    }
+    private IngredientRepository ingredientRepository;
 
-    public Ingredient getIngredientById(int id, int spaceId) throws NotFoundException {
+    public Ingredient getById(int id, int spaceId) throws NotFoundException {
         return ingredientRepository.getById(id, spaceId);
     }
 
-    public List<Ingredient> getAllIngredientsBySpaceId(int spaceId) {
+    public List<Ingredient> getAllBySpaceId(int spaceId) {
         return ingredientRepository.getAllBySpaceId(spaceId);
     }
 
-    public void saveIngredient(Ingredient ingredient) throws AlreadyExistsException {
+    public void addIngredient(Ingredient ingredient) throws AlreadyExistsException {
         ingredientRepository.save(ingredient);
     }
 
@@ -37,5 +33,5 @@ public class IngredientService {
     public void deleteIngredient(int id, int spaceId) throws NotFoundException {
         ingredientRepository.delete(id, spaceId);
     }
-
+    
 }
