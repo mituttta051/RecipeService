@@ -1,6 +1,5 @@
 package cybercooker.recipeservice.grpc.service;
 
-import com.google.protobuf.Empty;
 import cybercooker.recipeservice.entity.Ingredient;
 import cybercooker.recipeservice.grpc.*;
 import cybercooker.recipeservice.mapper.IngredientMapper;
@@ -8,6 +7,8 @@ import cybercooker.recipeservice.service.IngredientService;
 import io.grpc.stub.StreamObserver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.grpc.server.service.GrpcService;
+
+import java.util.stream.Collectors;
 
 @GrpcService
 public class IngredientGrpcService extends IngredientServiceGrpc.IngredientServiceImplBase {
@@ -26,12 +27,12 @@ public class IngredientGrpcService extends IngredientServiceGrpc.IngredientServi
 
     @Override
     public void getAllIngredientsBySpaceId(IngredientGetAllIBySpaceIdRequest request, StreamObserver<IngredientListDTO> responseObserver) {
-        IngredientListDTO.Builder builder = IngredientListDTO.newBuilder();
-        ingredientService.getAllBySpaceId(request.getSpaceId()).forEach(ingredient -> {
-            IngredientDTO ingredientDTO = IngredientMapper.INSTANCE.toIngredientDTO(ingredient);
-            builder.addIngredients(ingredientDTO);
-        });
-        responseObserver.onNext(builder.build());
+        IngredientListDTO ingredientListDTO = IngredientListDTO.newBuilder()
+                .addAllIngredients(ingredientService.getAllBySpaceId(request.getSpaceId()).stream()
+                        .map(IngredientMapper.INSTANCE::toIngredientDTO)
+                        .collect(Collectors.toList()))
+                .build();
+        responseObserver.onNext(ingredientListDTO);
         responseObserver.onCompleted();
     }
 
