@@ -18,11 +18,11 @@ public class RecipeService {
         this.recipeRepository = recipeRepository;
     }
 
-    public Recipe getRecipeById(int id, int spaceId) throws NotFoundException {
+    public Recipe getById(int id, int spaceId) throws NotFoundException {
         return recipeRepository.getById(id, spaceId);
     }
 
-    public List<Recipe> getAllRecipesBySpaceId(int spaceId) {
+    public List<Recipe> getAllBySpaceId(int spaceId) {
         return recipeRepository.getAllBySpaceId(spaceId);
     }
 

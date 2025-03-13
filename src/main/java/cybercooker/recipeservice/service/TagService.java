@@ -18,15 +18,15 @@ public class TagService {
         this.tagRepository = tagRepository;
     }
 
-    public Tag getTagById(int id, int spaceId) throws NotFoundException {
+    public Tag getById(int id, int spaceId) throws NotFoundException {
         return tagRepository.getById(id, spaceId);
     }
 
-    public List<Tag> getAllTagsBySpaceId(int spaceId) {
+    public List<Tag> getAllBySpaceId(int spaceId) {
         return tagRepository.getAllBySpaceId(spaceId);
     }
 
-    public void saveTag(Tag tag) throws AlreadyExistsException {
+    public void addTag(Tag tag) throws AlreadyExistsException {
         tagRepository.save(tag);
     }
 

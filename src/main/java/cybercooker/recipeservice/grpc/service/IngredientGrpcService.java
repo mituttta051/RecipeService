@@ -1,7 +1,7 @@
 package cybercooker.recipeservice.grpc.service;
 
 import cybercooker.recipeservice.entity.Ingredient;
-import cybercooker.recipeservice.grpc.*;
+import cybercooker.recipeservice.grpc.ingredient.*;
 import cybercooker.recipeservice.mapper.IngredientMapper;
 import cybercooker.recipeservice.service.IngredientService;
 import io.grpc.stub.StreamObserver;
