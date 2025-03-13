@@ -1,0 +1,35 @@
+type: grpc_request
+model: grpc_request
+id: gr_ASCbPaG2w4
+createdAt: 2025-03-13T14:36:28.041758
+updatedAt: 2025-03-13T14:36:56.050810
+workspaceId: wk_PVdugman8w
+folderId: fl_6xAMGFnpbN
+authenticationType: null
+authentication: {}
+description: ''
+message: |-
+  {
+    "space_id": 101,
+    "name": "Spaghetti Bolognese",
+    "description": "A classic Italian pasta dish",
+    "ingredients": [1, 2, 3, 4],
+    "servingsNumber": 4,
+    "cookTime": 30,
+    "tags": [
+      {
+        "id": 1,
+        "values": [101, 102]
+      },
+      {
+        "id": 2,
+        "values": [201, 202]
+      }
+    ]
+  }
+metadata: []
+method: AddRecipe
+name: ''
+service: recipe.RecipeService
+sortPriority: 0.0034000003
+url: localhost:9090

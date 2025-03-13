@@ -1,0 +1,21 @@
+type: grpc_request
+model: grpc_request
+id: gr_LbaM8b5vKz
+createdAt: 2025-03-13T14:31:56.125172
+updatedAt: 2025-03-13T14:33:42.276472
+workspaceId: wk_PVdugman8w
+folderId: fl_2aU7tYbpkP
+authenticationType: null
+authentication: {}
+description: ''
+message: |-
+  {
+    "name": "Krosh",
+    "space_id": 1
+  }
+metadata: []
+method: AddIngredient
+name: ''
+service: ingredient.IngredientService
+sortPriority: 0.0002
+url: localhost:9090
