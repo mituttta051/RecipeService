@@ -1,34 +1,29 @@
 syntax = "proto3";
 
-package ingredient;
+package filter;
 
 option java_multiple_files = true;
 option java_package = "cybercooker.recipeservice.grpc.filter";
 option java_outer_classname = "FilterProto";
 
 
-message AndFilter {
-  repeated Filter filters = 1;
+message AndFilterGrpc {
+  repeated FilterGrpc filters = 1;
 }
 
-message OrFilter {
-  repeated Filter filters = 1;
+message OrFilterGrpc {
+  repeated FilterGrpc filters = 1;
 }
 
-message TagInListFilter {
-  string tag = 1;
-  repeated string values = 2;
+message ContainsTagFilterGrpc {
+  int32 tagId = 1;
+  int32 tagValue = 2;
 }
 
-message TagEqualFilter {
-  string tag = 1;
-  string value = 2;
-}
-
-message Filter {
+message FilterGrpc {
   oneof filter {
-    AndFilter and = 1;
-    OrFilter or = 2;
-    TagInListFilter tagInList = 3;
+    AndFilterGrpc and = 1;
+    OrFilterGrpc or = 2;
+    ContainsTagFilterGrpc containsTag = 3;
   }
 }

@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS recipe (
     description TEXT NOT NULL,
     servings_number INT NOT NULL,
     cook_time INT NOT NULL,
-    tags JSON,
+    tags jsonb,
     PRIMARY KEY (id, space_id),
     UNIQUE (space_id, name)
 );

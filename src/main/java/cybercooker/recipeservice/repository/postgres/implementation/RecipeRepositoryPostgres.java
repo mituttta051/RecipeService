@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cybercooker.recipeservice.entity.Recipe;
+import cybercooker.recipeservice.entity.filter.Filter;
 import cybercooker.recipeservice.repository.interfaces.RecipeRepository;
 import cybercooker.recipeservice.repository.postgres.PostgresRepository;
 import cybercooker.recipeservice.repository.postgres.utils.ListUtils;
@@ -111,5 +112,11 @@ public class RecipeRepositoryPostgres extends PostgresRepository<Recipe> impleme
                     recipe.getId(), 
                     recipe.getSpaceId()};
         };
+    }
+
+    @Override
+    public List<Recipe> getRecipesByFilter(Filter filter) {
+        String sql ="SELECT * FROM RECIPE WHERE " + filter.getSql();
+        return jdbcTemplate.query(sql, rowMapper());
     }
 }

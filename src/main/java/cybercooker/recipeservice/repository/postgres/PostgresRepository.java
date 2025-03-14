@@ -16,7 +16,7 @@ import java.util.List;
 @Repository
 public abstract class PostgresRepository<T extends SpacedEntity> {
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    protected JdbcTemplate jdbcTemplate;
 
     protected abstract RowMapper<T> rowMapper();
 
