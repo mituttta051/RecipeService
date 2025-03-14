@@ -1,0 +1,27 @@
+type: grpc_request
+model: grpc_request
+id: gr_sGapPXaTBR
+createdAt: 2025-03-13T14:38:19.961101
+updatedAt: 2025-03-13T14:38:40.472810
+workspaceId: wk_PVdugman8w
+folderId: fl_tZrnmfV3qD
+authenticationType: null
+authentication: {}
+description: ''
+message: |-
+  {
+    "id": 1
+    "space_id": 1,
+    "name": "Cuisine",
+    "values": {
+      "101": "Italian",
+      "102": "Mexican",
+      "103": "Hyialian"
+    }
+  }
+metadata: []
+method: UpdateTag
+name: ''
+service: tag.TagService
+sortPriority: 0.003
+url: localhost:9090

@@ -1,0 +1,22 @@
+type: grpc_request
+model: grpc_request
+id: gr_BuPLEwS4H5
+createdAt: 2025-03-13T14:34:01.414625
+updatedAt: 2025-03-13T14:35:07.967641
+workspaceId: wk_PVdugman8w
+folderId: fl_2aU7tYbpkP
+authenticationType: null
+authentication: {}
+description: ''
+message: |-
+  {
+    "id": 1,
+    "space_id": 1,
+    "name": "Hyiosh"
+  }
+metadata: []
+method: UpdateIngredient
+name: ''
+service: ingredient.IngredientService
+sortPriority: 0.0003
+url: localhost:9090

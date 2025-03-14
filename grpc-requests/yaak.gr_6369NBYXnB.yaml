@@ -1,0 +1,36 @@
+type: grpc_request
+model: grpc_request
+id: gr_6369NBYXnB
+createdAt: 2025-03-13T14:36:48.242195
+updatedAt: 2025-03-13T14:37:11.169411
+workspaceId: wk_PVdugman8w
+folderId: fl_6xAMGFnpbN
+authenticationType: null
+authentication: {}
+description: ''
+message: |-
+  {
+    "id": 1,
+    "space_id": 101,
+    "name": "Hyetti Hyenese",
+    "description": "A classic Italian pasta dish",
+    "ingredients": [1, 2, 3, 4],
+    "servingsNumber": 4,
+    "cookTime": 30,
+    "tags": [
+      {
+        "id": 1,
+        "values": [101, 102]
+      },
+      {
+        "id": 2,
+        "values": [201, 202]
+      }
+    ]
+  }
+metadata: []
+method: UpdateRecipe
+name: ''
+service: recipe.RecipeService
+sortPriority: 0.0044000004
+url: localhost:9090

@@ -1,0 +1,21 @@
+type: grpc_request
+model: grpc_request
+id: gr_JXqCEYn7GW
+createdAt: 2025-03-04T09:35:52.429806
+updatedAt: 2025-03-13T14:30:14.144179
+workspaceId: wk_PVdugman8w
+folderId: fl_2aU7tYbpkP
+authenticationType: null
+authentication: {}
+description: ''
+message: |2
+
+  {
+    "space_id": 1
+  }
+metadata: []
+method: GetAllIngredientsBySpaceId
+name: ''
+service: ingredient.IngredientService
+sortPriority: 0.0
+url: localhost:9090

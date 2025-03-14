@@ -1,7 +1,9 @@
 syntax = "proto3";
 
+package ingredient;
+
 option java_multiple_files = true;
-option java_package = "cybercooker.recipeservice.grpc";
+option java_package = "cybercooker.recipeservice.grpc.ingredient";
 option java_outer_classname = "IngredientProto";
 
 message IngredientCreateRequest {

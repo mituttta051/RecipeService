@@ -1,8 +1,8 @@
 package cybercooker.recipeservice.mapper;
 
 import cybercooker.recipeservice.entity.Ingredient;
-import cybercooker.recipeservice.grpc.IngredientCreateRequest;
-import cybercooker.recipeservice.grpc.IngredientDTO;
+import cybercooker.recipeservice.grpc.ingredient.IngredientCreateRequest;
+import cybercooker.recipeservice.grpc.ingredient.IngredientDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

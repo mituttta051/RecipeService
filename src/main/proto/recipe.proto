@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package recipe;
+
+option java_multiple_files = true;
+option java_package = "cybercooker.recipeservice.grpc.recipe";
+option java_outer_classname = "RecipeProto";
+
+message RecipeId {
+  int32 id = 1;
+  int32 space_id = 2;
+}
+
+message TagDTO {
+  int32 id = 1;
+  repeated int32 values = 2;
+}
+
+message RecipeDTO {
+  int32 id = 1;
+  int32 space_id = 2;
+  string name = 3;
+  string description = 4;
+  repeated int32 ingredients = 5;
+  int32 servingsNumber = 6;
+  int32 cookTime = 7;
+  repeated TagDTO tags = 8;
+}
+
+message RecipeListDTO {
+  repeated RecipeDTO recipes = 1;
+}
+
+message RecipeGetAllBySpaceIdRequest {
+  int32 space_id = 1;
+}
+
+message RecipeCreateRequest {
+  int32 space_id = 1;
+  string name = 2;
+  string description = 3;
+  repeated int32 ingredients = 4;
+  int32 servingsNumber = 5;
+  int32 cookTime = 6;
+  repeated TagDTO tags = 7;
+}
+
+message Empty {}
+
+service RecipeService {
+  rpc GetRecipeById(RecipeId) returns (RecipeDTO);
+  rpc GetAllRecipesBySpaceId(RecipeGetAllBySpaceIdRequest) returns (RecipeListDTO);
+  rpc AddRecipe(RecipeCreateRequest) returns (Empty);
+  rpc UpdateRecipe(RecipeDTO) returns (Empty);
+  rpc DeleteRecipeById(RecipeId) returns (Empty);
+}

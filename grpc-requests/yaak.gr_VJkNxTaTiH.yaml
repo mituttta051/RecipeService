@@ -1,0 +1,21 @@
+type: grpc_request
+model: grpc_request
+id: gr_VJkNxTaTiH
+createdAt: 2025-03-13T14:37:43.619560
+updatedAt: 2025-03-13T14:37:50.133285
+workspaceId: wk_PVdugman8w
+folderId: fl_tZrnmfV3qD
+authenticationType: null
+authentication: {}
+description: ''
+message: |-
+  {
+    "id": 1,
+    "space_id": 1
+  }
+metadata: []
+method: GetTagById
+name: ''
+service: tag.TagService
+sortPriority: 0.0
+url: localhost:9090

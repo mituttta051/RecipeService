@@ -1,0 +1,21 @@
+type: grpc_request
+model: grpc_request
+id: gr_7dNiATYC3g
+createdAt: 2025-03-13T14:35:46.120933
+updatedAt: 2025-03-13T14:36:17.304654
+workspaceId: wk_PVdugman8w
+folderId: fl_6xAMGFnpbN
+authenticationType: null
+authentication: {}
+description: ''
+message: |-
+  {
+    "id": 1,
+    "space_id": 1
+  }
+metadata: []
+method: GetRecipeById
+name: ''
+service: recipe.RecipeService
+sortPriority: 0.0014000001
+url: localhost:9090
