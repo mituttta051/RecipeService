@@ -20,10 +20,23 @@ message ContainsTagFilterGrpc {
   int32 tagValue = 2;
 }
 
+message CookTimeFilterGrpc {
+  optional int32 min = 1;
+  optional int32 max = 2;
+}
+
+message ServingsNumberFilterGrpc {
+  int32 min = 1;
+  int32 max = 2;
+}
+
 message FilterGrpc {
   oneof filter {
     AndFilterGrpc and = 1;
     OrFilterGrpc or = 2;
     ContainsTagFilterGrpc containsTag = 3;
+    CookTimeFilterGrpc cookTime = 4;
+    ServingsNumberFilterGrpc servingsNumber = 5;
   }
 }
+
