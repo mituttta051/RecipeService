@@ -38,7 +38,7 @@ public class RecipeService {
     public void deleteRecipe(int id, int spaceId) throws NotFoundException {
         recipeRepository.delete(id, spaceId);
     }
-    
+
     public List<Recipe> getRecipesByFilter(Filter filter) {
         return recipeRepository.getRecipesByFilter(filter);
     }

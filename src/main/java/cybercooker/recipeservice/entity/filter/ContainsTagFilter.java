@@ -6,7 +6,7 @@ import lombok.Builder;
 public class ContainsTagFilter extends Filter {
     private int tagId;
     private int tagValue;
-    
+
     public String getSql() {
         return "EXISTS (" +
                 "SELECT 1 " +

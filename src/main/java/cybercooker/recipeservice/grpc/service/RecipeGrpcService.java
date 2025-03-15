@@ -19,7 +19,7 @@ public class RecipeGrpcService extends RecipeServiceGrpc.RecipeServiceImplBase {
     public void getRecipeById(RecipeId request, StreamObserver<RecipeDTO> responseObserver) {
         Recipe recipe = recipeService.getById(request.getId(), request.getSpaceId());
         RecipeDTO recipeDTO = RecipeMapper.INSTANCE.toRecipeDTO(recipe);
-        
+
         responseObserver.onNext(recipeDTO);
         responseObserver.onCompleted();
     }
@@ -31,7 +31,7 @@ public class RecipeGrpcService extends RecipeServiceGrpc.RecipeServiceImplBase {
                         .map(RecipeMapper.INSTANCE::toRecipeDTO)
                         .toList())
                 .build();
-        
+
         responseObserver.onNext(recipeListDTO);
         responseObserver.onCompleted();
     }
@@ -69,7 +69,7 @@ public class RecipeGrpcService extends RecipeServiceGrpc.RecipeServiceImplBase {
                         .map(RecipeMapper.INSTANCE::toRecipeDTO)
                         .toList())
                 .build();
-        
+
         responseObserver.onNext(recipeListDTO);
         responseObserver.onCompleted();
     }

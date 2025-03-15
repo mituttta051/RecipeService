@@ -30,11 +30,11 @@ public class RecipeServiceApplication implements CommandLineRunner {
 
     private void executeSqlFromFile() throws IOException {
         log.info("Creating tables");
-        
+
         File file = ResourceUtils.getFile("classpath:db/init.sql");
         String sql = new String(Files.readAllBytes(file.toPath()));
         jdbcTemplate.execute(sql);
-        
+
         log.info("Tables created");
     }
 }

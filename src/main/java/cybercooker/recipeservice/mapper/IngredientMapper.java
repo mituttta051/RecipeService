@@ -9,9 +9,11 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface IngredientMapper {
     IngredientMapper INSTANCE = Mappers.getMapper(IngredientMapper.class);
-    
+
     IngredientDTO toIngredientDTO(Ingredient ingredient);
+
     Ingredient fromRequestToIngredient(IngredientCreateRequest ingredientDTO);
+
     Ingredient fromDTOToIngredient(IngredientDTO ingredientDTO);
 
 }

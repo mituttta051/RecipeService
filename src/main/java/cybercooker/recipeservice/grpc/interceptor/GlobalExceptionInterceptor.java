@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class GlobalExceptionInterceptor implements GrpcExceptionHandler {
-    
+
     @Override
     public Status handleException(Throwable exception) {
         if (exception instanceof InternalException) {
