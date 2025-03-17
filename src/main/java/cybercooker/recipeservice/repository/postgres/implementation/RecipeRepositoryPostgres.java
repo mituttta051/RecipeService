@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cybercooker.recipeservice.entity.Recipe;
+import cybercooker.recipeservice.entity.filter.Filter;
 import cybercooker.recipeservice.repository.interfaces.RecipeRepository;
 import cybercooker.recipeservice.repository.postgres.PostgresRepository;
 import cybercooker.recipeservice.repository.postgres.utils.ListUtils;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class RecipeRepositoryPostgres extends PostgresRepository<Recipe> implements RecipeRepository{
+public class RecipeRepositoryPostgres extends PostgresRepository<Recipe> implements RecipeRepository {
 
     @Override
     protected RowMapper<Recipe> rowMapper() {
@@ -21,7 +22,8 @@ public class RecipeRepositoryPostgres extends PostgresRepository<Recipe> impleme
             ObjectMapper objectMapper = new ObjectMapper();
             List<Recipe.Tag> tags;
             try {
-                tags = objectMapper.readValue(rs.getString("tags"), new TypeReference<>(){});
+                tags = objectMapper.readValue(rs.getString("tags"), new TypeReference<>() {
+                });
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
@@ -53,6 +55,7 @@ public class RecipeRepositoryPostgres extends PostgresRepository<Recipe> impleme
     protected String generateGetAllBySpaceIdQuery() {
         return "SELECT * FROM recipe WHERE space_id = ?";
     }
+
     @Override
     protected String generateSaveQuery() {
         return "INSERT INTO recipe (space_id, name, description, ingredients, servings_number, cook_time, tags) VALUES (?, ?, ?, ?, ?, ?, ?::jsonb)";
@@ -102,14 +105,20 @@ public class RecipeRepositoryPostgres extends PostgresRepository<Recipe> impleme
                 throw new RuntimeException(e);
             }
             return new Object[]{
-                    recipe.getName(), 
-                    recipe.getDescription(), 
-                    recipe.getIngredients().toArray(new Integer[0]), 
-                    recipe.getServingsNumber(), 
-                    recipe.getCookTime(), 
-                    tags, 
-                    recipe.getId(), 
+                    recipe.getName(),
+                    recipe.getDescription(),
+                    recipe.getIngredients().toArray(new Integer[0]),
+                    recipe.getServingsNumber(),
+                    recipe.getCookTime(),
+                    tags,
+                    recipe.getId(),
                     recipe.getSpaceId()};
         };
+    }
+
+    @Override
+    public List<Recipe> getRecipesByFilter(Filter filter) {
+        String sql = "SELECT * FROM RECIPE WHERE " + filter.getSql();
+        return jdbcTemplate.query(sql, rowMapper());
     }
 }

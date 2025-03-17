@@ -1,6 +1,10 @@
 package cybercooker.recipeservice;
 
 import cybercooker.recipeservice.entity.Recipe;
+import cybercooker.recipeservice.entity.filter.AndFilter;
+import cybercooker.recipeservice.entity.filter.ContainsTagFilter;
+import cybercooker.recipeservice.entity.filter.Filter;
+import cybercooker.recipeservice.entity.filter.OrFilter;
 import cybercooker.recipeservice.exception.AlreadyExistsException;
 import cybercooker.recipeservice.exception.NotFoundException;
 import cybercooker.recipeservice.repository.postgres.implementation.RecipeRepositoryPostgres;
@@ -193,6 +197,74 @@ public class RecipeRepositoryTests extends RepositoryTests {
     @Test
     void testDeleteThatDoesNotExist() {
         assertThrows(NotFoundException.class, () -> recipeRepository.delete(1, 1));
+    }
+    
+    @Test
+    void testGetRecipesByFilter() {
+        Recipe recipe = Recipe.builder()
+                .id(1)
+                .spaceId(1)
+                .name("Lazagna")
+                .description("Delicious")
+                .ingredients(List.of(1, 2, 3))
+                .servingsNumber(4)
+                .cookTime(60)
+                .tags(List.of(Recipe.Tag.builder().id(1).values(List.of(1, 2, 3)).build()))
+                .build();
+        recipeRepository.save(recipe);
+
+        Recipe recipe2 = Recipe.builder()
+                .id(2)
+                .spaceId(1)
+                .name("Salt")
+                .description("Salty")
+                .ingredients(List.of(1))
+                .servingsNumber(1)
+                .cookTime(0)
+                .tags(List.of(Recipe.Tag.builder().id(1).values(List.of(3)).build()))
+                .build();
+        recipeRepository.save(recipe2);
+
+        Recipe recipe3 = Recipe.builder()
+                .id(1)
+                .spaceId(2)
+                .name("Salt")
+                .description("Salty")
+                .ingredients(List.of(1))
+                .servingsNumber(1)
+                .cookTime(0)
+                .tags(List.of(Recipe.Tag.builder().id(1).values(List.of(1, 2, 3)).build(), Recipe.Tag.builder().id(2).values(List.of(3)).build()))
+                .build();
+        recipeRepository.save(recipe3);
+
+        Filter andFilter = AndFilter.builder()
+                .filters(List.of(
+                        ContainsTagFilter.builder()
+                                .tagId(1)
+                                .tagValue(2)
+                                .build(),
+                        ContainsTagFilter.builder()
+                                .tagId(2)
+                                .tagValue(3)
+                                .build()
+                        )
+                )
+                .build();
+        Filter orFilter = OrFilter.builder()
+                .filters(List.of(
+                                ContainsTagFilter.builder()
+                                        .tagId(1)
+                                        .tagValue(2)
+                                        .build(),
+                                ContainsTagFilter.builder()
+                                        .tagId(2)
+                                        .tagValue(3)
+                                        .build()
+                        )
+                )
+                .build();
+        assertThat(recipeRepository.getRecipesByFilter(andFilter)).containsExactlyInAnyOrder(recipe3);
+        assertThat(recipeRepository.getRecipesByFilter(orFilter)).containsExactlyInAnyOrder(recipe, recipe3);
     }
     
 }

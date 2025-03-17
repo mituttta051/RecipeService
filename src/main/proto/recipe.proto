@@ -1,4 +1,5 @@
 syntax = "proto3";
+import "filter.proto";
 
 package recipe;
 
@@ -53,4 +54,5 @@ service RecipeService {
   rpc AddRecipe(RecipeCreateRequest) returns (Empty);
   rpc UpdateRecipe(RecipeDTO) returns (Empty);
   rpc DeleteRecipeById(RecipeId) returns (Empty);
+  rpc GetRecipesByFilter(filter.FilterGrpc) returns (RecipeListDTO);
 }

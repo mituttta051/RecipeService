@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public interface RecipeMapper {
     RecipeMapper INSTANCE = Mappers.getMapper(RecipeMapper.class);
 
-    
+
     default RecipeDTO toRecipeDTO(Recipe recipe) {
         if (recipe == null) {
             return null;
@@ -42,7 +42,7 @@ public interface RecipeMapper {
 
         return recipeDTO.build();
     }
-    
+
     @Mapping(target = "tags", expression = "java(toTagList(recipeDTO.getTagsList()))")
     @Mapping(target = "ingredients", expression = "java(recipeDTO.getIngredientsList())")
     Recipe fromDTOToRecipe(RecipeDTO recipeDTO);
@@ -52,36 +52,36 @@ public interface RecipeMapper {
     Recipe fromRequestToRecipe(RecipeCreateRequest request);
 
     default TagDTO toTagDTO(Recipe.Tag tag) {
-        if ( tag == null ) {
+        if (tag == null) {
             return null;
         }
 
         TagDTO.Builder tagDTO = TagDTO.newBuilder();
 
-        if ( tag.getId() != null ) {
-            tagDTO.setId( tag.getId() );
+        if (tag.getId() != null) {
+            tagDTO.setId(tag.getId());
         }
-        
+
         tagDTO.addAllValues(tag.getValues());
 
         return tagDTO.build();
     }
-    
+
     default Recipe.Tag fromTagDTO(TagDTO tagDTO) {
         if (tagDTO == null) {
             return null;
         }
 
         return Recipe.Tag.builder()
-                         .id(tagDTO.getId())
-                         .values(tagDTO.getValuesList())
-                         .build();
-        
+                .id(tagDTO.getId())
+                .values(tagDTO.getValuesList())
+                .build();
+
     }
 
     default List<Recipe.Tag> toTagList(List<TagDTO> tagDTOs) {
         return tagDTOs.stream()
-                      .map(this::fromTagDTO)
-                      .collect(Collectors.toList());
+                .map(this::fromTagDTO)
+                .collect(Collectors.toList());
     }
 }

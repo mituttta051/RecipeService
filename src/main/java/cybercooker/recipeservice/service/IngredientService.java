@@ -33,5 +33,5 @@ public class IngredientService {
     public void deleteIngredient(int id, int spaceId) throws NotFoundException {
         ingredientRepository.delete(id, spaceId);
     }
-    
+
 }

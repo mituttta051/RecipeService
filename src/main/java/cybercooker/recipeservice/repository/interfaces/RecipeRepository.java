@@ -1,6 +1,7 @@
 package cybercooker.recipeservice.repository.interfaces;
 
 import cybercooker.recipeservice.entity.Recipe;
+import cybercooker.recipeservice.entity.filter.Filter;
 import cybercooker.recipeservice.exception.AlreadyExistsException;
 import cybercooker.recipeservice.exception.NotFoundException;
 
@@ -16,4 +17,6 @@ public interface RecipeRepository {
     void update(Recipe recipe) throws NotFoundException, AlreadyExistsException;
 
     void delete(int id, int spaceId) throws NotFoundException;
+
+    List<Recipe> getRecipesByFilter(Filter filter);
 }

@@ -21,15 +21,6 @@ public class Recipe implements SpacedEntity {
     private int cookTime;
     private List<Tag> tags;
 
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Tag {
-        private Integer id;
-        private List<Integer> values;
-    }
-
     @Override
     public String toString() {
         return "Recipe: " +
@@ -41,5 +32,14 @@ public class Recipe implements SpacedEntity {
                 ", servingsNumber=" + servingsNumber +
                 ", cookTime=" + cookTime +
                 ", tags=" + tags;
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Tag {
+        private Integer id;
+        private List<Integer> values;
     }
 }

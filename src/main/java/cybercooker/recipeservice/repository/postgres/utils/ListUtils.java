@@ -13,6 +13,6 @@ public class ListUtils {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        
+
     }
 }

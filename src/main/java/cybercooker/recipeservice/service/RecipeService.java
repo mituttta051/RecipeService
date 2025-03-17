@@ -1,6 +1,7 @@
 package cybercooker.recipeservice.service;
 
 import cybercooker.recipeservice.entity.Recipe;
+import cybercooker.recipeservice.entity.filter.Filter;
 import cybercooker.recipeservice.exception.AlreadyExistsException;
 import cybercooker.recipeservice.exception.NotFoundException;
 import cybercooker.recipeservice.repository.interfaces.RecipeRepository;
@@ -36,5 +37,9 @@ public class RecipeService {
 
     public void deleteRecipe(int id, int spaceId) throws NotFoundException {
         recipeRepository.delete(id, spaceId);
+    }
+
+    public List<Recipe> getRecipesByFilter(Filter filter) {
+        return recipeRepository.getRecipesByFilter(filter);
     }
 }

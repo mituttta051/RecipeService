@@ -1,7 +1,9 @@
 package cybercooker.recipeservice.grpc.service;
 
 import cybercooker.recipeservice.entity.Recipe;
+import cybercooker.recipeservice.grpc.filter.FilterGrpc;
 import cybercooker.recipeservice.grpc.recipe.*;
+import cybercooker.recipeservice.mapper.FilterMapper;
 import cybercooker.recipeservice.mapper.RecipeMapper;
 import cybercooker.recipeservice.service.RecipeService;
 import io.grpc.stub.StreamObserver;
@@ -17,6 +19,7 @@ public class RecipeGrpcService extends RecipeServiceGrpc.RecipeServiceImplBase {
     public void getRecipeById(RecipeId request, StreamObserver<RecipeDTO> responseObserver) {
         Recipe recipe = recipeService.getById(request.getId(), request.getSpaceId());
         RecipeDTO recipeDTO = RecipeMapper.INSTANCE.toRecipeDTO(recipe);
+
         responseObserver.onNext(recipeDTO);
         responseObserver.onCompleted();
     }
@@ -28,6 +31,7 @@ public class RecipeGrpcService extends RecipeServiceGrpc.RecipeServiceImplBase {
                         .map(RecipeMapper.INSTANCE::toRecipeDTO)
                         .toList())
                 .build();
+
         responseObserver.onNext(recipeListDTO);
         responseObserver.onCompleted();
     }
@@ -55,6 +59,18 @@ public class RecipeGrpcService extends RecipeServiceGrpc.RecipeServiceImplBase {
         recipeService.deleteRecipe(request.getId(), request.getSpaceId());
 
         responseObserver.onNext(Empty.newBuilder().build());
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getRecipesByFilter(FilterGrpc request, StreamObserver<RecipeListDTO> responseObserver) {
+        RecipeListDTO recipeListDTO = RecipeListDTO.newBuilder()
+                .addAllRecipes(recipeService.getRecipesByFilter(FilterMapper.map(request)).stream()
+                        .map(RecipeMapper.INSTANCE::toRecipeDTO)
+                        .toList())
+                .build();
+
+        responseObserver.onNext(recipeListDTO);
         responseObserver.onCompleted();
     }
 }
