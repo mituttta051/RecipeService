@@ -2,7 +2,7 @@ package cybercooker.recipeservice.mapper;
 
 import cybercooker.recipeservice.entity.Recipe;
 import cybercooker.recipeservice.grpc.recipe.RecipeCreateRequest;
-import cybercooker.recipeservice.grpc.recipe.RecipeDTO;
+import cybercooker.recipeservice.grpc.recipe.RecipeRequestResponse;
 import cybercooker.recipeservice.grpc.recipe.TagDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,35 +17,35 @@ public interface RecipeMapper {
     RecipeMapper INSTANCE = Mappers.getMapper(RecipeMapper.class);
 
 
-    default RecipeDTO toRecipeDTO(Recipe recipe) {
+    default RecipeRequestResponse toRecipeDTO(Recipe recipe) {
         if (recipe == null) {
             return null;
         }
 
-        RecipeDTO.Builder recipeDTO = RecipeDTO.newBuilder();
+        RecipeRequestResponse.Builder recipeRequestResponse = RecipeRequestResponse.newBuilder();
 
-        recipeDTO.setId(recipe.getId());
-        recipeDTO.setSpaceId(recipe.getSpaceId());
-        recipeDTO.setName(recipe.getName());
-        recipeDTO.setDescription(recipe.getDescription());
-        recipeDTO.setServingsNumber(recipe.getServingsNumber());
-        recipeDTO.setCookTime(recipe.getCookTime());
+        recipeRequestResponse.setId(recipe.getId());
+        recipeRequestResponse.setSpaceId(recipe.getSpaceId());
+        recipeRequestResponse.setName(recipe.getName());
+        recipeRequestResponse.setDescription(recipe.getDescription());
+        recipeRequestResponse.setServingsNumber(recipe.getServingsNumber());
+        recipeRequestResponse.setCookTime(recipe.getCookTime());
 
         // Convert ingredients array to List<Integer>
         List<Integer> ingredientsList = new ArrayList<>(recipe.getIngredients());
-        recipeDTO.addAllIngredients(ingredientsList);
+        recipeRequestResponse.addAllIngredients(ingredientsList);
 
         // Convert tags
-        recipeDTO.addAllTags(recipe.getTags().stream()
+        recipeRequestResponse.addAllTags(recipe.getTags().stream()
                 .map(this::toTagDTO)
                 .collect(Collectors.toList()));
 
-        return recipeDTO.build();
+        return recipeRequestResponse.build();
     }
 
     @Mapping(target = "tags", expression = "java(toTagList(recipeDTO.getTagsList()))")
     @Mapping(target = "ingredients", expression = "java(recipeDTO.getIngredientsList())")
-    Recipe fromDTOToRecipe(RecipeDTO recipeDTO);
+    Recipe fromDTOToRecipe(RecipeRequestResponse recipeDTO);
 
     @Mapping(target = "tags", expression = "java(toTagList(request.getTagsList()))")
     @Mapping(target = "ingredients", expression = "java(request.getIngredientsList())")

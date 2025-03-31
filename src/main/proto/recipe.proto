@@ -17,7 +17,7 @@ message TagDTO {
   repeated int32 values = 2;
 }
 
-message RecipeDTO {
+message RecipeRequestResponse {
   int32 id = 1;
   int32 space_id = 2;
   string name = 3;
@@ -28,8 +28,8 @@ message RecipeDTO {
   repeated TagDTO tags = 8;
 }
 
-message RecipeListDTO {
-  repeated RecipeDTO recipes = 1;
+message RecipeListResponse {
+  repeated RecipeRequestResponse recipes = 1;
 }
 
 message RecipeGetAllBySpaceIdRequest {
@@ -49,10 +49,10 @@ message RecipeCreateRequest {
 message Empty {}
 
 service RecipeService {
-  rpc GetRecipeById(RecipeId) returns (RecipeDTO);
-  rpc GetAllRecipesBySpaceId(RecipeGetAllBySpaceIdRequest) returns (RecipeListDTO);
+  rpc GetRecipeById(RecipeId) returns (RecipeRequestResponse);
+  rpc GetAllRecipesBySpaceId(RecipeGetAllBySpaceIdRequest) returns (RecipeListResponse);
   rpc AddRecipe(RecipeCreateRequest) returns (Empty);
-  rpc UpdateRecipe(RecipeDTO) returns (Empty);
+  rpc UpdateRecipe(RecipeRequestResponse) returns (Empty);
   rpc DeleteRecipeById(RecipeId) returns (Empty);
-  rpc GetRecipesByFilter(filter.FilterGrpc) returns (RecipeListDTO);
+  rpc GetRecipesByFilter(filter.FilterGrpc) returns (RecipeListResponse);
 }
