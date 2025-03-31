@@ -117,8 +117,8 @@ public class RecipeRepositoryPostgres extends PostgresRepository<Recipe> impleme
     }
 
     @Override
-    public List<Recipe> getRecipesByFilter(Filter filter) {
-        String sql = "SELECT * FROM RECIPE WHERE " + filter.getSql();
+    public List<Recipe> getRecipesByFilter(Filter filter, int spaceId) {
+        String sql = "SELECT * FROM RECIPE WHERE space_id = " + spaceId + " AND " + filter.getSql();
         return jdbcTemplate.query(sql, rowMapper());
     }
 }

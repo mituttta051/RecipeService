@@ -203,7 +203,7 @@ public class RecipeRepositoryTests extends RepositoryTests {
     void testGetRecipesByFilter() {
         Recipe recipe = Recipe.builder()
                 .id(1)
-                .spaceId(1)
+                .spaceId(2)
                 .name("Lazagna")
                 .description("Delicious")
                 .ingredients(List.of(1, 2, 3))
@@ -214,7 +214,7 @@ public class RecipeRepositoryTests extends RepositoryTests {
         recipeRepository.save(recipe);
 
         Recipe recipe2 = Recipe.builder()
-                .id(2)
+                .id(1)
                 .spaceId(1)
                 .name("Salt")
                 .description("Salty")
@@ -226,7 +226,7 @@ public class RecipeRepositoryTests extends RepositoryTests {
         recipeRepository.save(recipe2);
 
         Recipe recipe3 = Recipe.builder()
-                .id(1)
+                .id(2)
                 .spaceId(2)
                 .name("Salt")
                 .description("Salty")
@@ -263,8 +263,8 @@ public class RecipeRepositoryTests extends RepositoryTests {
                         )
                 )
                 .build();
-        assertThat(recipeRepository.getRecipesByFilter(andFilter)).containsExactlyInAnyOrder(recipe3);
-        assertThat(recipeRepository.getRecipesByFilter(orFilter)).containsExactlyInAnyOrder(recipe, recipe3);
+        assertThat(recipeRepository.getRecipesByFilter(andFilter, 2)).containsExactlyInAnyOrder(recipe3);
+        assertThat(recipeRepository.getRecipesByFilter(orFilter, 2)).containsExactlyInAnyOrder(recipe, recipe3);
     }
     
 }

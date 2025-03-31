@@ -1,9 +1,9 @@
 package cybercooker.recipeservice.mapper;
 
 import cybercooker.recipeservice.entity.Recipe;
-import cybercooker.recipeservice.grpc.recipe.RecipeCreateRequest;
-import cybercooker.recipeservice.grpc.recipe.RecipeRequestResponse;
-import cybercooker.recipeservice.grpc.recipe.TagDTO;
+import cybercooker.recipeservice.grpc.recipe.RecipeGrpc;
+import cybercooker.recipeservice.grpc.recipe.RecipeGrpcCreateRequest;
+import cybercooker.recipeservice.grpc.recipe.TagGrpc;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -17,71 +17,71 @@ public interface RecipeMapper {
     RecipeMapper INSTANCE = Mappers.getMapper(RecipeMapper.class);
 
 
-    default RecipeRequestResponse toRecipeDTO(Recipe recipe) {
+    default RecipeGrpc toRecipeGrpc(Recipe recipe) {
         if (recipe == null) {
             return null;
         }
 
-        RecipeRequestResponse.Builder recipeRequestResponse = RecipeRequestResponse.newBuilder();
+        RecipeGrpc.Builder recipeGrpc = RecipeGrpc.newBuilder();
 
-        recipeRequestResponse.setId(recipe.getId());
-        recipeRequestResponse.setSpaceId(recipe.getSpaceId());
-        recipeRequestResponse.setName(recipe.getName());
-        recipeRequestResponse.setDescription(recipe.getDescription());
-        recipeRequestResponse.setServingsNumber(recipe.getServingsNumber());
-        recipeRequestResponse.setCookTime(recipe.getCookTime());
+        recipeGrpc.setId(recipe.getId());
+        recipeGrpc.setSpaceId(recipe.getSpaceId());
+        recipeGrpc.setName(recipe.getName());
+        recipeGrpc.setDescription(recipe.getDescription());
+        recipeGrpc.setServingsNumber(recipe.getServingsNumber());
+        recipeGrpc.setCookTime(recipe.getCookTime());
 
         // Convert ingredients array to List<Integer>
         List<Integer> ingredientsList = new ArrayList<>(recipe.getIngredients());
-        recipeRequestResponse.addAllIngredients(ingredientsList);
+        recipeGrpc.addAllIngredients(ingredientsList);
 
         // Convert tags
-        recipeRequestResponse.addAllTags(recipe.getTags().stream()
-                .map(this::toTagDTO)
+        recipeGrpc.addAllTags(recipe.getTags().stream()
+                .map(this::toTagGrpc)
                 .collect(Collectors.toList()));
 
-        return recipeRequestResponse.build();
+        return recipeGrpc.build();
     }
 
-    @Mapping(target = "tags", expression = "java(toTagList(recipeDTO.getTagsList()))")
-    @Mapping(target = "ingredients", expression = "java(recipeDTO.getIngredientsList())")
-    Recipe fromDTOToRecipe(RecipeRequestResponse recipeDTO);
+    @Mapping(target = "tags", expression = "java(toTagList(recipeGrpc.getTagsList()))")
+    @Mapping(target = "ingredients", expression = "java(recipeGrpc.getIngredientsList())")
+    Recipe fromGrpcToRecipe(RecipeGrpc recipeGrpc);
 
     @Mapping(target = "tags", expression = "java(toTagList(request.getTagsList()))")
     @Mapping(target = "ingredients", expression = "java(request.getIngredientsList())")
-    Recipe fromRequestToRecipe(RecipeCreateRequest request);
+    Recipe fromRequestToRecipe(RecipeGrpcCreateRequest request);
 
-    default TagDTO toTagDTO(Recipe.Tag tag) {
+    default TagGrpc toTagGrpc(Recipe.Tag tag) {
         if (tag == null) {
             return null;
         }
 
-        TagDTO.Builder tagDTO = TagDTO.newBuilder();
+        TagGrpc.Builder tagGrpc = TagGrpc.newBuilder();
 
         if (tag.getId() != null) {
-            tagDTO.setId(tag.getId());
+            tagGrpc.setId(tag.getId());
         }
 
-        tagDTO.addAllValues(tag.getValues());
+        tagGrpc.addAllValues(tag.getValues());
 
-        return tagDTO.build();
+        return tagGrpc.build();
     }
 
-    default Recipe.Tag fromTagDTO(TagDTO tagDTO) {
-        if (tagDTO == null) {
+    default Recipe.Tag fromTagGrpc(TagGrpc tagGrpc) {
+        if (tagGrpc == null) {
             return null;
         }
 
         return Recipe.Tag.builder()
-                .id(tagDTO.getId())
-                .values(tagDTO.getValuesList())
+                .id(tagGrpc.getId())
+                .values(tagGrpc.getValuesList())
                 .build();
 
     }
 
-    default List<Recipe.Tag> toTagList(List<TagDTO> tagDTOs) {
-        return tagDTOs.stream()
-                .map(this::fromTagDTO)
+    default List<Recipe.Tag> toTagList(List<TagGrpc> tagGrpcs) {
+        return tagGrpcs.stream()
+                .map(this::fromTagGrpc)
                 .collect(Collectors.toList());
     }
 }

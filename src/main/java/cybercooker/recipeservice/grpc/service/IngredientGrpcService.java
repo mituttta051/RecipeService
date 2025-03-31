@@ -17,27 +17,27 @@ public class IngredientGrpcService extends IngredientServiceGrpc.IngredientServi
 
 
     @Override
-    public void getIngredientById(IngredientId request, StreamObserver<IngredientDTO> responseObserver) {
+    public void getIngredientById(IngredientIdGrpc request, StreamObserver<IngredientGrpc> responseObserver) {
         Ingredient ingredient = ingredientService.getById(request.getId(), request.getSpaceId());
-        IngredientDTO ingredientDTO = IngredientMapper.INSTANCE.toIngredientDTO(ingredient);
-        responseObserver.onNext(ingredientDTO);
+        IngredientGrpc ingredientGrpc = IngredientMapper.INSTANCE.toIngredientGrpc(ingredient);
+        responseObserver.onNext(ingredientGrpc);
         responseObserver.onCompleted();
 
     }
 
     @Override
-    public void getAllIngredientsBySpaceId(IngredientGetAllIBySpaceIdRequest request, StreamObserver<IngredientListDTO> responseObserver) {
-        IngredientListDTO ingredientListDTO = IngredientListDTO.newBuilder()
+    public void getAllIngredientsBySpaceId(IngredientGrpcGetAll request, StreamObserver<IngredientListGrpc> responseObserver) {
+        IngredientListGrpc ingredientListGrpc = IngredientListGrpc.newBuilder()
                 .addAllIngredients(ingredientService.getAllBySpaceId(request.getSpaceId()).stream()
-                        .map(IngredientMapper.INSTANCE::toIngredientDTO)
+                        .map(IngredientMapper.INSTANCE::toIngredientGrpc)
                         .collect(Collectors.toList()))
                 .build();
-        responseObserver.onNext(ingredientListDTO);
+        responseObserver.onNext(ingredientListGrpc);
         responseObserver.onCompleted();
     }
 
     @Override
-    public void addIngredient(IngredientCreateRequest request, StreamObserver<Empty> responseObserver) {
+    public void addIngredient(IngredientGrpcCreateRequest request, StreamObserver<Empty> responseObserver) {
         Ingredient ingredient = IngredientMapper.INSTANCE.fromRequestToIngredient(request);
         ingredientService.addIngredient(ingredient);
 
@@ -46,8 +46,8 @@ public class IngredientGrpcService extends IngredientServiceGrpc.IngredientServi
     }
 
     @Override
-    public void updateIngredient(IngredientDTO request, StreamObserver<Empty> responseObserver) {
-        Ingredient ingredient = IngredientMapper.INSTANCE.fromDTOToIngredient(request);
+    public void updateIngredient(IngredientGrpc request, StreamObserver<Empty> responseObserver) {
+        Ingredient ingredient = IngredientMapper.INSTANCE.fromGrpcToIngredient(request);
         ingredientService.updateIngredient(ingredient);
 
         responseObserver.onNext(Empty.newBuilder().build());
@@ -55,7 +55,7 @@ public class IngredientGrpcService extends IngredientServiceGrpc.IngredientServi
     }
 
     @Override
-    public void deleteIngredientById(IngredientId request, StreamObserver<Empty> responseObserver) {
+    public void deleteIngredientById(IngredientIdGrpc request, StreamObserver<Empty> responseObserver) {
         ingredientService.deleteIngredient(request.getId(), request.getSpaceId());
 
         responseObserver.onNext(Empty.newBuilder().build());
