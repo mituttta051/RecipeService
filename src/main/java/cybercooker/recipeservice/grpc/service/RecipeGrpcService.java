@@ -16,17 +16,17 @@ public class RecipeGrpcService extends RecipeServiceGrpc.RecipeServiceImplBase {
     private RecipeService recipeService;
 
     @Override
-    public void getRecipeById(RecipeId request, StreamObserver<RecipeDTO> responseObserver) {
+    public void getRecipeById(RecipeId request, StreamObserver<RecipeRequestResponse> responseObserver) {
         Recipe recipe = recipeService.getById(request.getId(), request.getSpaceId());
-        RecipeDTO recipeDTO = RecipeMapper.INSTANCE.toRecipeDTO(recipe);
+        RecipeRequestResponse recipeRequestResponse = RecipeMapper.INSTANCE.toRecipeDTO(recipe);
 
-        responseObserver.onNext(recipeDTO);
+        responseObserver.onNext(recipeRequestResponse);
         responseObserver.onCompleted();
     }
 
     @Override
-    public void getAllRecipesBySpaceId(RecipeGetAllBySpaceIdRequest request, StreamObserver<RecipeListDTO> responseObserver) {
-        RecipeListDTO recipeListDTO = RecipeListDTO.newBuilder()
+    public void getAllRecipesBySpaceId(RecipeGetAllBySpaceIdRequest request, StreamObserver<RecipeListResponse> responseObserver) {
+        RecipeListResponse recipeListDTO = RecipeListResponse.newBuilder()
                 .addAllRecipes(recipeService.getAllBySpaceId(request.getSpaceId()).stream()
                         .map(RecipeMapper.INSTANCE::toRecipeDTO)
                         .toList())
@@ -46,7 +46,7 @@ public class RecipeGrpcService extends RecipeServiceGrpc.RecipeServiceImplBase {
     }
 
     @Override
-    public void updateRecipe(RecipeDTO request, StreamObserver<Empty> responseObserver) {
+    public void updateRecipe(RecipeRequestResponse request, StreamObserver<Empty> responseObserver) {
         Recipe recipe = RecipeMapper.INSTANCE.fromDTOToRecipe(request);
         recipeService.updateRecipe(recipe);
 
@@ -63,8 +63,8 @@ public class RecipeGrpcService extends RecipeServiceGrpc.RecipeServiceImplBase {
     }
 
     @Override
-    public void getRecipesByFilter(FilterGrpc request, StreamObserver<RecipeListDTO> responseObserver) {
-        RecipeListDTO recipeListDTO = RecipeListDTO.newBuilder()
+    public void getRecipesByFilter(FilterGrpc request, StreamObserver<RecipeListResponse> responseObserver) {
+        RecipeListResponse recipeListDTO = RecipeListResponse.newBuilder()
                 .addAllRecipes(recipeService.getRecipesByFilter(FilterMapper.map(request)).stream()
                         .map(RecipeMapper.INSTANCE::toRecipeDTO)
                         .toList())
