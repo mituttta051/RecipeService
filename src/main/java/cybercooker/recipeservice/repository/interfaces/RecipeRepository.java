@@ -18,5 +18,5 @@ public interface RecipeRepository {
 
     void delete(int id, int spaceId) throws NotFoundException;
 
-    List<Recipe> getRecipesByFilter(Filter filter);
+    List<Recipe> getRecipesByFilter(Filter filter, int spaceId);
 }

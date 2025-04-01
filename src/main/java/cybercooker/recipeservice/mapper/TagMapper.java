@@ -1,8 +1,8 @@
 package cybercooker.recipeservice.mapper;
 
 import cybercooker.recipeservice.entity.Tag;
-import cybercooker.recipeservice.grpc.tag.TagCreateRequest;
-import cybercooker.recipeservice.grpc.tag.TagDTO;
+import cybercooker.recipeservice.grpc.tag.TagGrpc;
+import cybercooker.recipeservice.grpc.tag.TagGrpcCreateRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -12,28 +12,28 @@ import java.util.Map;
 public interface TagMapper {
     TagMapper INSTANCE = Mappers.getMapper(TagMapper.class);
 
-    default TagDTO toTagDTO(Tag tag) {
+    default TagGrpc toTagGrpc(Tag tag) {
         if (tag == null) {
             return null;
         }
 
-        TagDTO.Builder tagDTO = TagDTO.newBuilder();
+        TagGrpc.Builder tagGrpc = TagGrpc.newBuilder();
 
-        tagDTO.setId(tag.getId());
-        tagDTO.setSpaceId(tag.getSpaceId());
-        tagDTO.setName(tag.getName());
-        if (tagDTO.getValuesMap() != null) {
+        tagGrpc.setId(tag.getId());
+        tagGrpc.setSpaceId(tag.getSpaceId());
+        tagGrpc.setName(tag.getName());
+        if (tagGrpc.getValuesMap() != null) {
             Map<Integer, String> map = tag.getValues();
             if (map != null) {
-                tagDTO.putAllValues(map);
+                tagGrpc.putAllValues(map);
             }
         }
 
-        return tagDTO.build();
+        return tagGrpc.build();
     }
 
-    Tag fromRequestToTag(TagCreateRequest tagDTO);
+    Tag fromRequestToTag(TagGrpcCreateRequest tagGrpc);
 
-    Tag fromDTOToTag(TagDTO tagDTO);
+    Tag fromGrpcToTag(TagGrpc tagGrpc);
 
 }

@@ -39,7 +39,7 @@ public class RecipeService {
         recipeRepository.delete(id, spaceId);
     }
 
-    public List<Recipe> getRecipesByFilter(Filter filter) {
-        return recipeRepository.getRecipesByFilter(filter);
+    public List<Recipe> getRecipesByFilter(Filter filter, int spaceId) {
+        return recipeRepository.getRecipesByFilter(filter, spaceId);
     }
 }

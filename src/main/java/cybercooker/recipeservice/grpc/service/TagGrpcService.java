@@ -16,26 +16,26 @@ public class TagGrpcService extends TagServiceGrpc.TagServiceImplBase {
     private TagService tagService;
 
     @Override
-    public void getTagById(TagId request, StreamObserver<TagDTO> responseObserver) {
+    public void getTagById(TagId request, StreamObserver<TagGrpc> responseObserver) {
         Tag tag = tagService.getById(request.getId(), request.getSpaceId());
-        TagDTO tagDTO = TagMapper.INSTANCE.toTagDTO(tag);
-        responseObserver.onNext(tagDTO);
+        TagGrpc tagGrpc = TagMapper.INSTANCE.toTagGrpc(tag);
+        responseObserver.onNext(tagGrpc);
         responseObserver.onCompleted();
     }
 
     @Override
-    public void getAllTagsBySpaceId(TagGetAllBySpaceIdRequest request, StreamObserver<TagListDTO> responseObserver) {
-        TagListDTO tagListDTO = TagListDTO.newBuilder()
+    public void getAllTagsBySpaceId(TagGrpcGetAll request, StreamObserver<TagListGrpc> responseObserver) {
+        TagListGrpc tagListGrpc = TagListGrpc.newBuilder()
                 .addAllTags(tagService.getAllBySpaceId(request.getSpaceId()).stream()
-                        .map(TagMapper.INSTANCE::toTagDTO)
+                        .map(TagMapper.INSTANCE::toTagGrpc)
                         .collect(Collectors.toList()))
                 .build();
-        responseObserver.onNext(tagListDTO);
+        responseObserver.onNext(tagListGrpc);
         responseObserver.onCompleted();
     }
 
     @Override
-    public void addTag(TagCreateRequest request, StreamObserver<Empty> responseObserver) {
+    public void addTag(TagGrpcCreateRequest request, StreamObserver<Empty> responseObserver) {
         Tag tag = TagMapper.INSTANCE.fromRequestToTag(request);
         tagService.addTag(tag);
 
@@ -44,8 +44,8 @@ public class TagGrpcService extends TagServiceGrpc.TagServiceImplBase {
     }
 
     @Override
-    public void updateTag(TagDTO request, StreamObserver<Empty> responseObserver) {
-        Tag tag = TagMapper.INSTANCE.fromDTOToTag(request);
+    public void updateTag(TagGrpc request, StreamObserver<Empty> responseObserver) {
+        Tag tag = TagMapper.INSTANCE.fromGrpcToTag(request);
         tagService.updateTag(tag);
 
         responseObserver.onNext(Empty.newBuilder().build());

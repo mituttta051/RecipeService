@@ -1,8 +1,8 @@
 package cybercooker.recipeservice.mapper;
 
 import cybercooker.recipeservice.entity.Ingredient;
-import cybercooker.recipeservice.grpc.ingredient.IngredientCreateRequest;
-import cybercooker.recipeservice.grpc.ingredient.IngredientDTO;
+import cybercooker.recipeservice.grpc.ingredient.IngredientGrpc;
+import cybercooker.recipeservice.grpc.ingredient.IngredientGrpcCreateRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -10,10 +10,10 @@ import org.mapstruct.factory.Mappers;
 public interface IngredientMapper {
     IngredientMapper INSTANCE = Mappers.getMapper(IngredientMapper.class);
 
-    IngredientDTO toIngredientDTO(Ingredient ingredient);
+    IngredientGrpc toIngredientGrpc(Ingredient ingredient);
 
-    Ingredient fromRequestToIngredient(IngredientCreateRequest ingredientDTO);
+    Ingredient fromRequestToIngredient(IngredientGrpcCreateRequest ingredientGrpc);
 
-    Ingredient fromDTOToIngredient(IngredientDTO ingredientDTO);
+    Ingredient fromGrpcToIngredient(IngredientGrpc ingredientGrpc);
 
 }

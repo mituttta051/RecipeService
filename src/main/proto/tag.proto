@@ -11,22 +11,22 @@ message TagId {
   int32 space_id = 2;
 }
 
-message TagDTO {
+message TagGrpc {
   int32 id = 1;
   int32 space_id = 2;
   string name = 3;
   map<int32, string> values = 4;
 }
 
-message TagListDTO {
-  repeated TagDTO tags = 1;
+message TagListGrpc {
+  repeated TagGrpc tags = 1;
 }
 
-message TagGetAllBySpaceIdRequest {
+message TagGrpcGetAll {
   int32 space_id = 1;
 }
 
-message TagCreateRequest {
+message TagGrpcCreateRequest {
   int32 space_id = 1;
   string name = 2;
   map<int32, string> values = 3;
@@ -35,9 +35,9 @@ message TagCreateRequest {
 message Empty {}
 
 service TagService {
-  rpc GetTagById(TagId) returns (TagDTO);
-  rpc GetAllTagsBySpaceId(TagGetAllBySpaceIdRequest) returns (TagListDTO);
-  rpc AddTag(TagCreateRequest) returns (Empty);
-  rpc UpdateTag(TagDTO) returns (Empty);
+  rpc GetTagById(TagId) returns (TagGrpc);
+  rpc GetAllTagsBySpaceId(TagGrpcGetAll) returns (TagListGrpc);
+  rpc AddTag(TagGrpcCreateRequest) returns (Empty);
+  rpc UpdateTag(TagGrpc) returns (Empty);
   rpc DeleteTagById(TagId) returns (Empty);
 }

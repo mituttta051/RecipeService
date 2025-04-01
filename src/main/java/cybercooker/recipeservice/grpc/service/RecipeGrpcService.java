@@ -1,7 +1,6 @@
 package cybercooker.recipeservice.grpc.service;
 
 import cybercooker.recipeservice.entity.Recipe;
-import cybercooker.recipeservice.grpc.filter.FilterGrpc;
 import cybercooker.recipeservice.grpc.recipe.*;
 import cybercooker.recipeservice.mapper.FilterMapper;
 import cybercooker.recipeservice.mapper.RecipeMapper;
@@ -16,28 +15,28 @@ public class RecipeGrpcService extends RecipeServiceGrpc.RecipeServiceImplBase {
     private RecipeService recipeService;
 
     @Override
-    public void getRecipeById(RecipeId request, StreamObserver<RecipeRequestResponse> responseObserver) {
+    public void getRecipeById(RecipeIdGrpc request, StreamObserver<RecipeGrpc> responseObserver) {
         Recipe recipe = recipeService.getById(request.getId(), request.getSpaceId());
-        RecipeRequestResponse recipeRequestResponse = RecipeMapper.INSTANCE.toRecipeDTO(recipe);
+        RecipeGrpc recipeRequestResponse = RecipeMapper.INSTANCE.toRecipeGrpc(recipe);
 
         responseObserver.onNext(recipeRequestResponse);
         responseObserver.onCompleted();
     }
 
     @Override
-    public void getAllRecipesBySpaceId(RecipeGetAllBySpaceIdRequest request, StreamObserver<RecipeListResponse> responseObserver) {
-        RecipeListResponse recipeListDTO = RecipeListResponse.newBuilder()
+    public void getAllRecipesBySpaceId(RecipeGetAllGrpc request, StreamObserver<RecipeListGrpc> responseObserver) {
+        RecipeListGrpc recipeListGrpc = RecipeListGrpc.newBuilder()
                 .addAllRecipes(recipeService.getAllBySpaceId(request.getSpaceId()).stream()
-                        .map(RecipeMapper.INSTANCE::toRecipeDTO)
+                        .map(RecipeMapper.INSTANCE::toRecipeGrpc)
                         .toList())
                 .build();
 
-        responseObserver.onNext(recipeListDTO);
+        responseObserver.onNext(recipeListGrpc);
         responseObserver.onCompleted();
     }
 
     @Override
-    public void addRecipe(RecipeCreateRequest request, StreamObserver<Empty> responseObserver) {
+    public void addRecipe(RecipeGrpcCreateRequest request, StreamObserver<Empty> responseObserver) {
         Recipe recipe = RecipeMapper.INSTANCE.fromRequestToRecipe(request);
         recipeService.saveRecipe(recipe);
 
@@ -46,8 +45,8 @@ public class RecipeGrpcService extends RecipeServiceGrpc.RecipeServiceImplBase {
     }
 
     @Override
-    public void updateRecipe(RecipeRequestResponse request, StreamObserver<Empty> responseObserver) {
-        Recipe recipe = RecipeMapper.INSTANCE.fromDTOToRecipe(request);
+    public void updateRecipe(RecipeGrpc request, StreamObserver<Empty> responseObserver) {
+        Recipe recipe = RecipeMapper.INSTANCE.fromGrpcToRecipe(request);
         recipeService.updateRecipe(recipe);
 
         responseObserver.onNext(Empty.newBuilder().build());
@@ -55,7 +54,7 @@ public class RecipeGrpcService extends RecipeServiceGrpc.RecipeServiceImplBase {
     }
 
     @Override
-    public void deleteRecipeById(RecipeId request, StreamObserver<Empty> responseObserver) {
+    public void deleteRecipeById(RecipeIdGrpc request, StreamObserver<Empty> responseObserver) {
         recipeService.deleteRecipe(request.getId(), request.getSpaceId());
 
         responseObserver.onNext(Empty.newBuilder().build());
@@ -63,14 +62,14 @@ public class RecipeGrpcService extends RecipeServiceGrpc.RecipeServiceImplBase {
     }
 
     @Override
-    public void getRecipesByFilter(FilterGrpc request, StreamObserver<RecipeListResponse> responseObserver) {
-        RecipeListResponse recipeListDTO = RecipeListResponse.newBuilder()
-                .addAllRecipes(recipeService.getRecipesByFilter(FilterMapper.map(request)).stream()
-                        .map(RecipeMapper.INSTANCE::toRecipeDTO)
+    public void getRecipesByFilter(GetRecipesByFilterGrpc request, StreamObserver<RecipeListGrpc> responseObserver) {
+        RecipeListGrpc recipeListGrpc = RecipeListGrpc.newBuilder()
+                .addAllRecipes(recipeService.getRecipesByFilter(FilterMapper.map(request.getFilter()), request.getSpaceId()).stream()
+                        .map(RecipeMapper.INSTANCE::toRecipeGrpc)
                         .toList())
                 .build();
 
-        responseObserver.onNext(recipeListDTO);
+        responseObserver.onNext(recipeListGrpc);
         responseObserver.onCompleted();
     }
 }
