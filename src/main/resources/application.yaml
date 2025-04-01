@@ -2,7 +2,7 @@ spring:
   application:
     name: RecipeService
   datasource:
-    url: jdbc:postgresql://localhost:5432/recipe-db
+    url: jdbc:postgresql://localhost:5432/recipeservice
     username: admin
     password: secret
   grpc:
