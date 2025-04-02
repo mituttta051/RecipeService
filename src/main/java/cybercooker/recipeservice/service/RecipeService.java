@@ -40,6 +40,9 @@ public class RecipeService {
     }
 
     public List<Recipe> getRecipesByFilter(Filter filter, int spaceId) {
+        if (filter == null) {
+            return getAllBySpaceId(spaceId);
+        }
         return recipeRepository.getRecipesByFilter(filter, spaceId);
     }
 }
