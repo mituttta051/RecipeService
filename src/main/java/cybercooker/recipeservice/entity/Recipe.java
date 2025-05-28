@@ -19,6 +19,7 @@ public class Recipe implements SpacedEntity {
     private List<Integer> ingredients;
     private int servingsNumber;
     private int cookTime;
+    private int shelfLife;
     private List<Tag> tags;
 
     @Override
@@ -31,6 +32,7 @@ public class Recipe implements SpacedEntity {
                 ", ingredients=" + ingredients +
                 ", servingsNumber=" + servingsNumber +
                 ", cookTime=" + cookTime +
+                ", shelfLife=" + shelfLife +
                 ", tags=" + tags;
     }
 

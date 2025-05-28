@@ -2,7 +2,7 @@ package cybercooker.recipeservice.grpc.service;
 
 import cybercooker.recipeservice.entity.Ingredient;
 import cybercooker.recipeservice.grpc.ingredient.*;
-import cybercooker.recipeservice.mapper.IngredientMapper;
+import cybercooker.recipeservice.mapper.grpc.IngredientMapperGrpc;
 import cybercooker.recipeservice.service.IngredientService;
 import io.grpc.stub.StreamObserver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class IngredientGrpcService extends IngredientServiceGrpc.IngredientServi
     @Override
     public void getIngredientById(IngredientIdGrpc request, StreamObserver<IngredientGrpc> responseObserver) {
         Ingredient ingredient = ingredientService.getById(request.getId(), request.getSpaceId());
-        IngredientGrpc ingredientGrpc = IngredientMapper.INSTANCE.toIngredientGrpc(ingredient);
+        IngredientGrpc ingredientGrpc = IngredientMapperGrpc.INSTANCE.toGrpc(ingredient);
         responseObserver.onNext(ingredientGrpc);
         responseObserver.onCompleted();
 
@@ -29,7 +29,7 @@ public class IngredientGrpcService extends IngredientServiceGrpc.IngredientServi
     public void getAllIngredientsBySpaceId(IngredientGrpcGetAll request, StreamObserver<IngredientListGrpc> responseObserver) {
         IngredientListGrpc ingredientListGrpc = IngredientListGrpc.newBuilder()
                 .addAllIngredients(ingredientService.getAllBySpaceId(request.getSpaceId()).stream()
-                        .map(IngredientMapper.INSTANCE::toIngredientGrpc)
+                        .map(IngredientMapperGrpc.INSTANCE::toGrpc)
                         .collect(Collectors.toList()))
                 .build();
         responseObserver.onNext(ingredientListGrpc);
@@ -38,7 +38,7 @@ public class IngredientGrpcService extends IngredientServiceGrpc.IngredientServi
 
     @Override
     public void addIngredient(IngredientGrpcCreateRequest request, StreamObserver<Empty> responseObserver) {
-        Ingredient ingredient = IngredientMapper.INSTANCE.fromRequestToIngredient(request);
+        Ingredient ingredient = IngredientMapperGrpc.INSTANCE.fromCreateRequest(request);
         ingredientService.addIngredient(ingredient);
 
         responseObserver.onNext(Empty.newBuilder().build());
@@ -47,7 +47,7 @@ public class IngredientGrpcService extends IngredientServiceGrpc.IngredientServi
 
     @Override
     public void updateIngredient(IngredientGrpc request, StreamObserver<Empty> responseObserver) {
-        Ingredient ingredient = IngredientMapper.INSTANCE.fromGrpcToIngredient(request);
+        Ingredient ingredient = IngredientMapperGrpc.INSTANCE.fromUpdateRequest(request);
         ingredientService.updateIngredient(ingredient);
 
         responseObserver.onNext(Empty.newBuilder().build());

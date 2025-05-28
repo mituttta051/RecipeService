@@ -1,15 +1,10 @@
 package cybercooker.recipeservice.exception;
 
-import io.grpc.Status;
+import cybercooker.recipeservice.exception.details.DatabaseDetails;
 
-public class AlreadyExistsException extends InternalException {
-    public AlreadyExistsException(String message) {
-        super(message);
+public class AlreadyExistsException extends BaseException {
+    public AlreadyExistsException(DatabaseDetails details) {
+        super(details);
     }
-
-    @Override
-    public Status toGrpcStatus() {
-        return Status.ALREADY_EXISTS.withDescription(getMessage());
-    }
-
+    
 }

@@ -1,4 +1,4 @@
-package cybercooker.recipeservice.mapper;
+package cybercooker.recipeservice.mapper.grpc;
 
 import cybercooker.recipeservice.entity.Tag;
 import cybercooker.recipeservice.grpc.tag.TagGrpc;
@@ -9,10 +9,10 @@ import org.mapstruct.factory.Mappers;
 import java.util.Map;
 
 @Mapper
-public interface TagMapper {
-    TagMapper INSTANCE = Mappers.getMapper(TagMapper.class);
+public interface TagMapperGrpc {
+    TagMapperGrpc INSTANCE = Mappers.getMapper(TagMapperGrpc.class);
 
-    default TagGrpc toTagGrpc(Tag tag) {
+    default TagGrpc toGrpc(Tag tag) {
         if (tag == null) {
             return null;
         }
@@ -32,8 +32,8 @@ public interface TagMapper {
         return tagGrpc.build();
     }
 
-    Tag fromRequestToTag(TagGrpcCreateRequest tagGrpc);
+    Tag fromCreateRequest(TagGrpcCreateRequest tagGrpc);
 
-    Tag fromGrpcToTag(TagGrpc tagGrpc);
+    Tag fromUpdateRequest(TagGrpc tagGrpc);
 
 }

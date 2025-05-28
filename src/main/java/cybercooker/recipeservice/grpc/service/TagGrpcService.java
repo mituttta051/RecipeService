@@ -2,7 +2,7 @@ package cybercooker.recipeservice.grpc.service;
 
 import cybercooker.recipeservice.entity.Tag;
 import cybercooker.recipeservice.grpc.tag.*;
-import cybercooker.recipeservice.mapper.TagMapper;
+import cybercooker.recipeservice.mapper.grpc.TagMapperGrpc;
 import cybercooker.recipeservice.service.TagService;
 import io.grpc.stub.StreamObserver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class TagGrpcService extends TagServiceGrpc.TagServiceImplBase {
     @Override
     public void getTagById(TagId request, StreamObserver<TagGrpc> responseObserver) {
         Tag tag = tagService.getById(request.getId(), request.getSpaceId());
-        TagGrpc tagGrpc = TagMapper.INSTANCE.toTagGrpc(tag);
+        TagGrpc tagGrpc = TagMapperGrpc.INSTANCE.toGrpc(tag);
         responseObserver.onNext(tagGrpc);
         responseObserver.onCompleted();
     }
@@ -27,7 +27,7 @@ public class TagGrpcService extends TagServiceGrpc.TagServiceImplBase {
     public void getAllTagsBySpaceId(TagGrpcGetAll request, StreamObserver<TagListGrpc> responseObserver) {
         TagListGrpc tagListGrpc = TagListGrpc.newBuilder()
                 .addAllTags(tagService.getAllBySpaceId(request.getSpaceId()).stream()
-                        .map(TagMapper.INSTANCE::toTagGrpc)
+                        .map(TagMapperGrpc.INSTANCE::toGrpc)
                         .collect(Collectors.toList()))
                 .build();
         responseObserver.onNext(tagListGrpc);
@@ -36,7 +36,7 @@ public class TagGrpcService extends TagServiceGrpc.TagServiceImplBase {
 
     @Override
     public void addTag(TagGrpcCreateRequest request, StreamObserver<Empty> responseObserver) {
-        Tag tag = TagMapper.INSTANCE.fromRequestToTag(request);
+        Tag tag = TagMapperGrpc.INSTANCE.fromCreateRequest(request);
         tagService.addTag(tag);
 
         responseObserver.onNext(Empty.newBuilder().build());
@@ -45,7 +45,7 @@ public class TagGrpcService extends TagServiceGrpc.TagServiceImplBase {
 
     @Override
     public void updateTag(TagGrpc request, StreamObserver<Empty> responseObserver) {
-        Tag tag = TagMapper.INSTANCE.fromGrpcToTag(request);
+        Tag tag = TagMapperGrpc.INSTANCE.fromUpdateRequest(request);
         tagService.updateTag(tag);
 
         responseObserver.onNext(Empty.newBuilder().build());
