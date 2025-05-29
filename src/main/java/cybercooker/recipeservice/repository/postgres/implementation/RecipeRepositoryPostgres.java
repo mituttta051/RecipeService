@@ -36,6 +36,7 @@ public class RecipeRepositoryPostgres extends PostgresRepository<Recipe> impleme
                     .ingredients(ListUtils.sqlArrayToList(rs.getArray("ingredients")))
                     .servingsNumber(rs.getInt("servings_number"))
                     .cookTime(rs.getInt("cook_time"))
+                    .shelfLife(rs.getInt("shelf_life"))
                     .tags(tags)
                     .build();
         };
@@ -58,12 +59,12 @@ public class RecipeRepositoryPostgres extends PostgresRepository<Recipe> impleme
 
     @Override
     protected String generateSaveQuery() {
-        return "INSERT INTO recipe (space_id, name, description, ingredients, servings_number, cook_time, tags) VALUES (?, ?, ?, ?, ?, ?, ?::jsonb)";
+        return "INSERT INTO recipe (space_id, name, description, ingredients, servings_number, cook_time, shelf_life, tags) VALUES (?, ?, ?, ?, ?, ?, ?, ?::jsonb)";
     }
 
     @Override
     protected String generateUpdateQuery() {
-        return "UPDATE recipe SET name = ?, description = ?, ingredients = ?, servings_number = ?, cook_time = ?, tags = ?::jsonb  WHERE id = ? AND space_id = ?";
+        return "UPDATE recipe SET name = ?, description = ?, ingredients = ?, servings_number = ?, cook_time = ?, shelf_life = ?, tags = ?::jsonb  WHERE id = ? AND space_id = ?";
     }
 
     @Override
@@ -89,6 +90,7 @@ public class RecipeRepositoryPostgres extends PostgresRepository<Recipe> impleme
                     recipe.getIngredients().toArray(new Integer[0]),
                     recipe.getServingsNumber(),
                     recipe.getCookTime(),
+                    recipe.getShelfLife(),
                     tags
             };
         };
@@ -110,6 +112,7 @@ public class RecipeRepositoryPostgres extends PostgresRepository<Recipe> impleme
                     recipe.getIngredients().toArray(new Integer[0]),
                     recipe.getServingsNumber(),
                     recipe.getCookTime(),
+                    recipe.getShelfLife(),
                     tags,
                     recipe.getId(),
                     recipe.getSpaceId()};

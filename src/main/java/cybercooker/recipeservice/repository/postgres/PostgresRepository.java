@@ -3,6 +3,7 @@ package cybercooker.recipeservice.repository.postgres;
 import cybercooker.recipeservice.entity.SpacedEntity;
 import cybercooker.recipeservice.exception.AlreadyExistsException;
 import cybercooker.recipeservice.exception.NotFoundException;
+import cybercooker.recipeservice.exception.details.DatabaseDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -41,7 +42,7 @@ public abstract class PostgresRepository<T extends SpacedEntity> {
         try {
             return jdbcTemplate.queryForObject(sql, rowMapper(), id, spaceId);
         } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException(getTableName() + " with id " + id + " not found");
+            throw new NotFoundException(new DatabaseDetails(getTableName() + " with id " + id + " not found"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -58,7 +59,7 @@ public abstract class PostgresRepository<T extends SpacedEntity> {
             Object[] params = getSaveParamsExtractor().extract(t);
             jdbcTemplate.update(sql, params);
         } catch (DuplicateKeyException e) {
-            throw new AlreadyExistsException(t.toString() + " already exists in space " + t.getSpaceId());
+            throw new AlreadyExistsException(new DatabaseDetails(t.toString() + " already exists in space " + t.getSpaceId()));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -69,10 +70,10 @@ public abstract class PostgresRepository<T extends SpacedEntity> {
         try {
             int numOfRows = jdbcTemplate.update(sql, getUpdateParamsExtractor().extract(t));
             if (numOfRows == 0) {
-                throw new NotFoundException(getTableName() + " with id " + t.getId() + " not found");
+                throw new NotFoundException(new DatabaseDetails(getTableName() + " with id " + t.getId() + " not found"));
             }
         } catch (DuplicateKeyException e) {
-            throw new AlreadyExistsException(t.toString() + " already exists in space " + t.getSpaceId());
+            throw new AlreadyExistsException(new DatabaseDetails(t.toString() + " already exists in space " + t.getSpaceId()));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -83,7 +84,7 @@ public abstract class PostgresRepository<T extends SpacedEntity> {
         String sql = generateDeleteQuery();
         int numOfRows = jdbcTemplate.update(sql, id, spaceId);
         if (numOfRows == 0) {
-            throw new NotFoundException(getTableName() + " with id " + id + " not found");
+            throw new NotFoundException(new DatabaseDetails(getTableName() + " with id " + id + " not found"));
         }
     }
 

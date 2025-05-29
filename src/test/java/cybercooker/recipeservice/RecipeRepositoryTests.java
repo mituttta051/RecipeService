@@ -38,6 +38,7 @@ public class RecipeRepositoryTests extends RepositoryTests {
                 .ingredients(List.of(1, 2, 3))
                 .servingsNumber(4)
                 .cookTime(60)
+                .shelfLife(1)
                 .tags(List.of(Recipe.Tag.builder().id(1).values(List.of(1, 2, 3)).build()))
                 .build();
         recipeRepository.save(recipe);
@@ -52,6 +53,7 @@ public class RecipeRepositoryTests extends RepositoryTests {
                 .ingredients(List.of(1))
                 .servingsNumber(1)
                 .cookTime(0)
+                .shelfLife(1)
                 .tags(List.of(Recipe.Tag.builder().id(1).values(List.of(1, 2, 3)).build()))
                 .build();
 
@@ -63,6 +65,7 @@ public class RecipeRepositoryTests extends RepositoryTests {
                 .ingredients(List.of(1))
                 .servingsNumber(1)
                 .cookTime(0)
+                .shelfLife(1)
                 .tags(List.of(Recipe.Tag.builder().id(1).values(List.of(1, 2, 3)).build()))
                 .build();
         recipeRepository.save(recipe3);
@@ -80,6 +83,7 @@ public class RecipeRepositoryTests extends RepositoryTests {
                 .ingredients(List.of(1, 2, 3))
                 .servingsNumber(4)
                 .cookTime(60)
+                .shelfLife(1)
                 .tags(List.of(Recipe.Tag.builder().id(1).values(List.of(1, 2, 3)).build()))
                 .build();
         recipeRepository.save(recipe);
@@ -96,6 +100,7 @@ public class RecipeRepositoryTests extends RepositoryTests {
                 .ingredients(List.of(1, 2, 3))
                 .servingsNumber(4)
                 .cookTime(60)
+                .shelfLife(1)
                 .tags(List.of(Recipe.Tag.builder().id(1).values(List.of(1, 2, 3)).build()))
                 .build();
         recipeRepository.save(recipe);
@@ -107,6 +112,7 @@ public class RecipeRepositoryTests extends RepositoryTests {
                 .ingredients(List.of(1))
                 .servingsNumber(1)
                 .cookTime(0)
+                .shelfLife(1)
                 .tags(List.of(Recipe.Tag.builder().id(1).values(List.of(1, 2, 3)).build()))
                 .build();
         recipeRepository.update(updatedRecipe);
@@ -124,6 +130,7 @@ public class RecipeRepositoryTests extends RepositoryTests {
                 .ingredients(List.of(1, 2, 3))
                 .servingsNumber(4)
                 .cookTime(60)
+                .shelfLife(1)
                 .tags(List.of(Recipe.Tag.builder().id(1).values(List.of(1, 2, 3)).build()))
                 .build();
         assertThrows(NotFoundException.class, () -> recipeRepository.update(recipe));
@@ -144,6 +151,7 @@ public class RecipeRepositoryTests extends RepositoryTests {
                 .ingredients(List.of(1, 2, 3))
                 .servingsNumber(4)
                 .cookTime(60)
+                .shelfLife(1)
                 .tags(List.of(Recipe.Tag.builder().id(1).values(List.of(1, 2, 3)).build()))
                 .build();
         recipeRepository.save(recipe);
@@ -156,6 +164,7 @@ public class RecipeRepositoryTests extends RepositoryTests {
                 .ingredients(List.of(1))
                 .servingsNumber(1)
                 .cookTime(0)
+                .shelfLife(1)
                 .tags(List.of(Recipe.Tag.builder().id(1).values(List.of(1, 2, 3)).build()))
                 .build();
         recipeRepository.save(recipe2);
@@ -168,6 +177,7 @@ public class RecipeRepositoryTests extends RepositoryTests {
                 .ingredients(List.of(1))
                 .servingsNumber(1)
                 .cookTime(0)
+                .shelfLife(1)
                 .tags(List.of(Recipe.Tag.builder().id(1).values(List.of(1, 2, 3)).build()))
                 .build();
         recipeRepository.save(recipe3);
@@ -187,6 +197,7 @@ public class RecipeRepositoryTests extends RepositoryTests {
                 .ingredients(List.of(1, 2, 3))
                 .servingsNumber(4)
                 .cookTime(60)
+                .shelfLife(1)
                 .tags(List.of(Recipe.Tag.builder().id(1).values(List.of(1, 2, 3)).build()))
                 .build();
         recipeRepository.save(recipe);
@@ -209,6 +220,7 @@ public class RecipeRepositoryTests extends RepositoryTests {
                 .ingredients(List.of(1, 2, 3))
                 .servingsNumber(4)
                 .cookTime(60)
+                .shelfLife(1)
                 .tags(List.of(Recipe.Tag.builder().id(1).values(List.of(1, 2, 3)).build()))
                 .build();
         recipeRepository.save(recipe);
@@ -221,6 +233,7 @@ public class RecipeRepositoryTests extends RepositoryTests {
                 .ingredients(List.of(1))
                 .servingsNumber(1)
                 .cookTime(0)
+                .shelfLife(1)
                 .tags(List.of(Recipe.Tag.builder().id(1).values(List.of(3)).build()))
                 .build();
         recipeRepository.save(recipe2);
@@ -233,6 +246,7 @@ public class RecipeRepositoryTests extends RepositoryTests {
                 .ingredients(List.of(1))
                 .servingsNumber(1)
                 .cookTime(0)
+                .shelfLife(1)
                 .tags(List.of(Recipe.Tag.builder().id(1).values(List.of(1, 2, 3)).build(), Recipe.Tag.builder().id(2).values(List.of(3)).build()))
                 .build();
         recipeRepository.save(recipe3);

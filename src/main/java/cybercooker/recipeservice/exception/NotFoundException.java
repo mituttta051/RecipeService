@@ -1,14 +1,10 @@
 package cybercooker.recipeservice.exception;
 
-import io.grpc.Status;
+import cybercooker.recipeservice.exception.details.DatabaseDetails;
 
-public class NotFoundException extends InternalException {
-    public NotFoundException(String message) {
-        super(message);
+public class NotFoundException extends BaseException {
+    public NotFoundException(DatabaseDetails details) {
+        super(details);
     }
 
-    @Override
-    public Status toGrpcStatus() {
-        return Status.NOT_FOUND.withDescription(getMessage());
-    }
 }

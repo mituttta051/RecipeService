@@ -1,11 +1,11 @@
-package cybercooker.recipeservice.mapper;
+package cybercooker.recipeservice.mapper.grpc;
 
 import cybercooker.recipeservice.entity.filter.*;
 import cybercooker.recipeservice.grpc.filter.*;
 
 import java.util.stream.Collectors;
 
-public class FilterMapper {
+public class GrpcFilterMapper {
 
     public static Filter map(FilterGrpc grpcFilter) {
         return switch (grpcFilter.getFilterCase()) {
@@ -21,7 +21,7 @@ public class FilterMapper {
     public static OrFilter toOrFilter(OrFilterGrpc orFilterGrpc) {
         return OrFilter.builder()
                 .filters(orFilterGrpc.getFiltersList().stream()
-                        .map(FilterMapper::map)
+                        .map(GrpcFilterMapper::map)
                         .collect(Collectors.toList()))
                 .build();
     }
@@ -29,7 +29,7 @@ public class FilterMapper {
     public static AndFilter toAndFilter(AndFilterGrpc andFilterGrpc) {
         return AndFilter.builder()
                 .filters(andFilterGrpc.getFiltersList().stream()
-                        .map(FilterMapper::map)
+                        .map(GrpcFilterMapper::map)
                         .collect(Collectors.toList()))
                 .build();
     }

@@ -36,91 +36,101 @@ INSERT INTO tag (space_id, name, values) VALUES
 
 -- Insert recipes (space_id 1)
 -- Recipe 1: Chicken Stir Fry
-INSERT INTO recipe (space_id, name, ingredients, description, servings_number, cook_time, tags) VALUES
+INSERT INTO recipe (space_id, name, ingredients, description, servings_number, cook_time, shelf_life, tags) VALUES
 (1, 'Chicken Stir Fry', 
  ARRAY[1, 2, 4, 5, 6, 7, 8],
  'A quick and healthy Asian-inspired dish',
  4,
  30,
+ 2,
  '[{"id": 1, "values": [102]}, {"id": 2, "values": [201]}, {"id": 3, "values": [301]}, {"id": 6, "values": [601]}, {"id": 7, "values": [701]}, {"id": 8, "values": [801]}]'::jsonb);
 
 -- Recipe 2: Spaghetti Carbonara
-INSERT INTO recipe (space_id, name, ingredients, description, servings_number, cook_time, tags) VALUES
+INSERT INTO recipe (space_id, name, ingredients, description, servings_number, cook_time, shelf_life, tags) VALUES
 (1, 'Spaghetti Carbonara',
  ARRAY[9, 10, 5, 6, 7, 8],
  'Classic Italian pasta dish',
  4,
  25,
+ 1,
  '[{"id": 1, "values": [101]}, {"id": 2, "values": [202]}, {"id": 3, "values": [301]}, {"id": 6, "values": [601]}, {"id": 7, "values": [703]}, {"id": 8, "values": [801]}]'::jsonb);
 
 -- Recipe 3: Vegetable Curry
-INSERT INTO recipe (space_id, name, ingredients, description, servings_number, cook_time, tags) VALUES
+INSERT INTO recipe (space_id, name, ingredients, description, servings_number, cook_time, shelf_life, tags) VALUES
 (1, 'Vegetable Curry',
  ARRAY[2, 3, 4, 11, 12, 6, 7],
  'Spicy vegetarian curry',
  4,
  45,
+ 3,
  '[{"id": 1, "values": [102]}, {"id": 2, "values": [202]}, {"id": 3, "values": [301]}, {"id": 4, "values": [401]}, {"id": 9, "values": [901]}, {"id": 8, "values": [801]}]'::jsonb);
 
 -- Recipe 4: Beef Stew
-INSERT INTO recipe (space_id, name, ingredients, description, servings_number, cook_time, tags) VALUES
+INSERT INTO recipe (space_id, name, ingredients, description, servings_number, cook_time, shelf_life, tags) VALUES
 (1, 'Beef Stew',
  ARRAY[13, 14, 15, 4, 5, 6, 7, 8],
  'Hearty comfort food',
  6,
  120,
+ 4,
  '[{"id": 2, "values": [202]}, {"id": 3, "values": [301]}, {"id": 5, "values": [504]}, {"id": 6, "values": [603]}, {"id": 7, "values": [701]}, {"id": 8, "values": [803]}]'::jsonb);
 
 -- Recipe 5: Grilled Salmon
-INSERT INTO recipe (space_id, name, ingredients, description, servings_number, cook_time, tags) VALUES
+INSERT INTO recipe (space_id, name, ingredients, description, servings_number, cook_time, shelf_life, tags) VALUES
 (1, 'Grilled Salmon',
  ARRAY[17, 18, 6, 7, 8, 16],
  'Healthy fish dish',
  2,
  20,
+ 1,
  '[{"id": 2, "values": [201]}, {"id": 3, "values": [301]}, {"id": 5, "values": [503]}, {"id": 6, "values": [601]}, {"id": 7, "values": [701]}, {"id": 8, "values": [802]}]'::jsonb);
 
 -- Recipe 6: Mushroom Risotto
-INSERT INTO recipe (space_id, name, ingredients, description, servings_number, cook_time, tags) VALUES
+INSERT INTO recipe (space_id, name, ingredients, description, servings_number, cook_time, shelf_life, tags) VALUES
 (1, 'Mushroom Risotto',
  ARRAY[2, 11, 4, 5, 10, 6, 7],
  'Creamy Italian rice dish',
  4,
  40,
+ 2,
  '[{"id": 1, "values": [101]}, {"id": 2, "values": [202]}, {"id": 3, "values": [301]}, {"id": 6, "values": [602]}, {"id": 7, "values": [703]}, {"id": 8, "values": [801]}]'::jsonb);
 
 -- Recipe 7: Stuffed Bell Peppers
-INSERT INTO recipe (space_id, name, ingredients, description, servings_number, cook_time, tags) VALUES
+INSERT INTO recipe (space_id, name, ingredients, description, servings_number, cook_time, shelf_life, tags) VALUES
 (1, 'Stuffed Bell Peppers',
  ARRAY[12, 2, 3, 4, 10, 6, 7],
  'Vegetarian stuffed peppers',
  4,
  60,
+ 2,
  '[{"id": 2, "values": [202]}, {"id": 3, "values": [301]}, {"id": 4, "values": [401]}, {"id": 5, "values": [502]}, {"id": 6, "values": [602]}, {"id": 8, "values": [802]}]'::jsonb);
 
 -- Recipe 8: Lemon Garlic Chicken
-INSERT INTO recipe (space_id, name, ingredients, description, servings_number, cook_time, tags) VALUES
+INSERT INTO recipe (space_id, name, ingredients, description, servings_number, cook_time, shelf_life, tags) VALUES
 (1, 'Lemon Garlic Chicken',
  ARRAY[1, 18, 5, 6, 7, 8, 16],
  'Tangy chicken dish',
  4,
  45,
+ 3,
  '[{"id": 2, "values": [201]}, {"id": 3, "values": [301]}, {"id": 5, "values": [502]}, {"id": 6, "values": [602]}, {"id": 7, "values": [701]}, {"id": 9, "values": [904]}, {"id": 8, "values": [801]}]'::jsonb);
 
 -- Recipe 9: Pasta Primavera
-INSERT INTO recipe (space_id, name, ingredients, description, servings_number, cook_time, tags) VALUES
+INSERT INTO recipe (space_id, name, ingredients, description, servings_number, cook_time, shelf_life, tags) VALUES
 (1, 'Pasta Primavera',
  ARRAY[9, 3, 12, 11, 6, 19, 7],
  'Vegetable pasta dish',
  4,
  30,
+ 2,
  '[{"id": 1, "values": [101]}, {"id": 2, "values": [201]}, {"id": 3, "values": [301]}, {"id": 4, "values": [401]}, {"id": 6, "values": [601]}, {"id": 8, "values": [804]}]'::jsonb);
 
 -- Recipe 10: Mediterranean Salad
-INSERT INTO recipe (space_id, name, ingredients, description, servings_number, cook_time, tags) VALUES
+INSERT INTO recipe (space_id, name, ingredients, description, servings_number, cook_time, shelf_life, tags) VALUES
 (1, 'Mediterranean Salad',
  ARRAY[3, 4, 10, 6, 19, 20, 7],
  'Fresh and healthy salad',
  4,
  15,
+ 1,
  '[{"id": 1, "values": [103]}, {"id": 2, "values": [201]}, {"id": 3, "values": [303]}, {"id": 4, "values": [401]}, {"id": 6, "values": [601]}, {"id": 7, "values": [702]}, {"id": 8, "values": [802]}]'::jsonb); 

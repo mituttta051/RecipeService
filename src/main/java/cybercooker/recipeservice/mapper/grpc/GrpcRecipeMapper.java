@@ -1,4 +1,4 @@
-package cybercooker.recipeservice.mapper;
+package cybercooker.recipeservice.mapper.grpc;
 
 import cybercooker.recipeservice.entity.Recipe;
 import cybercooker.recipeservice.grpc.recipe.RecipeGrpc;
@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper
-public interface RecipeMapper {
-    RecipeMapper INSTANCE = Mappers.getMapper(RecipeMapper.class);
+public interface GrpcRecipeMapper {
+    GrpcRecipeMapper INSTANCE = Mappers.getMapper(GrpcRecipeMapper.class);
 
 
-    default RecipeGrpc toRecipeGrpc(Recipe recipe) {
+    default RecipeGrpc toGrpc(Recipe recipe) {
         if (recipe == null) {
             return null;
         }
@@ -30,6 +30,7 @@ public interface RecipeMapper {
         recipeGrpc.setDescription(recipe.getDescription());
         recipeGrpc.setServingsNumber(recipe.getServingsNumber());
         recipeGrpc.setCookTime(recipe.getCookTime());
+        recipeGrpc.setShelfLife(recipe.getShelfLife());
 
         // Convert ingredients array to List<Integer>
         List<Integer> ingredientsList = new ArrayList<>(recipe.getIngredients());
@@ -45,11 +46,11 @@ public interface RecipeMapper {
 
     @Mapping(target = "tags", expression = "java(toTagList(recipeGrpc.getTagsList()))")
     @Mapping(target = "ingredients", expression = "java(recipeGrpc.getIngredientsList())")
-    Recipe fromGrpcToRecipe(RecipeGrpc recipeGrpc);
+    Recipe toRecipe(RecipeGrpc recipeGrpc);
 
     @Mapping(target = "tags", expression = "java(toTagList(request.getTagsList()))")
     @Mapping(target = "ingredients", expression = "java(request.getIngredientsList())")
-    Recipe fromRequestToRecipe(RecipeGrpcCreateRequest request);
+    Recipe fromCreateRequest(RecipeGrpcCreateRequest request);
 
     default TagGrpc toTagGrpc(Recipe.Tag tag) {
         if (tag == null) {
