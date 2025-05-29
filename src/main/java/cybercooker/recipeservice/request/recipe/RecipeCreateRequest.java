@@ -21,7 +21,7 @@ public class RecipeCreateRequest {
     private Integer shelfLife;
     private List<Integer> ingredients;
     private List<Tag> tags;
-    
+
     @Data
     @Builder
     @NoArgsConstructor
@@ -30,6 +30,6 @@ public class RecipeCreateRequest {
         private Integer id;
         private List<Integer> values;
     }
-    
+
 }
 

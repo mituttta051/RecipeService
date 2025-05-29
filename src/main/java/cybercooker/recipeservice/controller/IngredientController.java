@@ -1,15 +1,14 @@
 package cybercooker.recipeservice.controller;
 
 import cybercooker.recipeservice.entity.Ingredient;
-import cybercooker.recipeservice.mapper.grpc.IngredientMapperGrpc;
-import cybercooker.recipeservice.mapper.http.IngredientMapperHttp;
+import cybercooker.recipeservice.mapper.http.HttpIngredientMapper;
 import cybercooker.recipeservice.request.ingredient.IngredientCreateRequest;
 import cybercooker.recipeservice.request.ingredient.IngredientUpdateRequest;
 import cybercooker.recipeservice.service.IngredientService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,13 +36,13 @@ public class IngredientController {
 
     @PostMapping
     public void addIngredient(@Valid @RequestBody IngredientCreateRequest request) {
-        Ingredient ingredient = IngredientMapperHttp.INSTANCE.fromCreateRequest(request);
+        Ingredient ingredient = HttpIngredientMapper.INSTANCE.fromCreateRequest(request);
         ingredientService.addIngredient(ingredient);
     }
 
     @PutMapping
     public void updateIngredient(@Valid @RequestBody IngredientUpdateRequest request) {
-        Ingredient ingredient = IngredientMapperHttp.INSTANCE.fromUpdateRequest(request);
+        Ingredient ingredient = HttpIngredientMapper.INSTANCE.fromUpdateRequest(request);
         ingredientService.updateIngredient(ingredient);
     }
 

@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper
-public interface RecipeMapperGrpc {
-    RecipeMapperGrpc INSTANCE = Mappers.getMapper(RecipeMapperGrpc.class);
+public interface GrpcRecipeMapper {
+    GrpcRecipeMapper INSTANCE = Mappers.getMapper(GrpcRecipeMapper.class);
 
 
     default RecipeGrpc toGrpc(Recipe recipe) {

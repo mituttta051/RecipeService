@@ -2,8 +2,8 @@ package cybercooker.recipeservice.grpc.service;
 
 import cybercooker.recipeservice.entity.Recipe;
 import cybercooker.recipeservice.grpc.recipe.*;
-import cybercooker.recipeservice.mapper.grpc.FilterMapperGrpc;
-import cybercooker.recipeservice.mapper.grpc.RecipeMapperGrpc;
+import cybercooker.recipeservice.mapper.grpc.GrpcFilterMapper;
+import cybercooker.recipeservice.mapper.grpc.GrpcRecipeMapper;
 import cybercooker.recipeservice.service.RecipeService;
 import io.grpc.stub.StreamObserver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class RecipeGrpcService extends RecipeServiceGrpc.RecipeServiceImplBase {
     @Override
     public void getRecipeById(RecipeIdGrpc request, StreamObserver<RecipeGrpc> responseObserver) {
         Recipe recipe = recipeService.getById(request.getId(), request.getSpaceId());
-        RecipeGrpc recipeRequestResponse = RecipeMapperGrpc.INSTANCE.toGrpc(recipe);
+        RecipeGrpc recipeRequestResponse = GrpcRecipeMapper.INSTANCE.toGrpc(recipe);
 
         responseObserver.onNext(recipeRequestResponse);
         responseObserver.onCompleted();
@@ -27,7 +27,7 @@ public class RecipeGrpcService extends RecipeServiceGrpc.RecipeServiceImplBase {
     public void getAllRecipesBySpaceId(RecipeGetAllGrpc request, StreamObserver<RecipeListGrpc> responseObserver) {
         RecipeListGrpc recipeListGrpc = RecipeListGrpc.newBuilder()
                 .addAllRecipes(recipeService.getAllBySpaceId(request.getSpaceId()).stream()
-                        .map(RecipeMapperGrpc.INSTANCE::toGrpc)
+                        .map(GrpcRecipeMapper.INSTANCE::toGrpc)
                         .toList())
                 .build();
 
@@ -37,7 +37,7 @@ public class RecipeGrpcService extends RecipeServiceGrpc.RecipeServiceImplBase {
 
     @Override
     public void addRecipe(RecipeGrpcCreateRequest request, StreamObserver<Empty> responseObserver) {
-        Recipe recipe = RecipeMapperGrpc.INSTANCE.fromCreateRequest(request);
+        Recipe recipe = GrpcRecipeMapper.INSTANCE.fromCreateRequest(request);
         recipeService.saveRecipe(recipe);
 
         responseObserver.onNext(Empty.newBuilder().build());
@@ -46,7 +46,7 @@ public class RecipeGrpcService extends RecipeServiceGrpc.RecipeServiceImplBase {
 
     @Override
     public void updateRecipe(RecipeGrpc request, StreamObserver<Empty> responseObserver) {
-        Recipe recipe = RecipeMapperGrpc.INSTANCE.toRecipe(request);
+        Recipe recipe = GrpcRecipeMapper.INSTANCE.toRecipe(request);
         recipeService.updateRecipe(recipe);
 
         responseObserver.onNext(Empty.newBuilder().build());
@@ -64,8 +64,8 @@ public class RecipeGrpcService extends RecipeServiceGrpc.RecipeServiceImplBase {
     @Override
     public void getRecipesByFilter(GetRecipesByFilterGrpc request, StreamObserver<RecipeListGrpc> responseObserver) {
         RecipeListGrpc recipeListGrpc = RecipeListGrpc.newBuilder()
-                .addAllRecipes(recipeService.getRecipesByFilter(FilterMapperGrpc.map(request.getFilter()), request.getSpaceId()).stream()
-                        .map(RecipeMapperGrpc.INSTANCE::toGrpc)
+                .addAllRecipes(recipeService.getRecipesByFilter(GrpcFilterMapper.map(request.getFilter()), request.getSpaceId()).stream()
+                        .map(GrpcRecipeMapper.INSTANCE::toGrpc)
                         .toList())
                 .build();
 

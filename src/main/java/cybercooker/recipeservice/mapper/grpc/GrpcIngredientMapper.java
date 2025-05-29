@@ -7,8 +7,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
-public interface IngredientMapperGrpc {
-    IngredientMapperGrpc INSTANCE = Mappers.getMapper(IngredientMapperGrpc.class);
+public interface GrpcIngredientMapper {
+    GrpcIngredientMapper INSTANCE = Mappers.getMapper(GrpcIngredientMapper.class);
 
     IngredientGrpc toGrpc(Ingredient ingredient);
 

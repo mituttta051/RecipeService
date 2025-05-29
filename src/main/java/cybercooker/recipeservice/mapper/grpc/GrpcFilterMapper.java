@@ -5,7 +5,7 @@ import cybercooker.recipeservice.grpc.filter.*;
 
 import java.util.stream.Collectors;
 
-public class FilterMapperGrpc {
+public class GrpcFilterMapper {
 
     public static Filter map(FilterGrpc grpcFilter) {
         return switch (grpcFilter.getFilterCase()) {
@@ -21,7 +21,7 @@ public class FilterMapperGrpc {
     public static OrFilter toOrFilter(OrFilterGrpc orFilterGrpc) {
         return OrFilter.builder()
                 .filters(orFilterGrpc.getFiltersList().stream()
-                        .map(FilterMapperGrpc::map)
+                        .map(GrpcFilterMapper::map)
                         .collect(Collectors.toList()))
                 .build();
     }
@@ -29,7 +29,7 @@ public class FilterMapperGrpc {
     public static AndFilter toAndFilter(AndFilterGrpc andFilterGrpc) {
         return AndFilter.builder()
                 .filters(andFilterGrpc.getFiltersList().stream()
-                        .map(FilterMapperGrpc::map)
+                        .map(GrpcFilterMapper::map)
                         .collect(Collectors.toList()))
                 .build();
     }

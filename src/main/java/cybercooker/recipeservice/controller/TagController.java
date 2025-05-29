@@ -1,14 +1,14 @@
 package cybercooker.recipeservice.controller;
 
 import cybercooker.recipeservice.entity.Tag;
-import cybercooker.recipeservice.mapper.http.TagMapperHttp;
+import cybercooker.recipeservice.mapper.http.HttpTagMapper;
 import cybercooker.recipeservice.request.tag.CreateTagRequest;
 import cybercooker.recipeservice.request.tag.UpdateTagRequest;
 import cybercooker.recipeservice.service.TagService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,13 +35,13 @@ public class TagController {
 
     @PostMapping
     public void addTag(@Valid @RequestBody CreateTagRequest request) {
-        Tag tag = TagMapperHttp.INSTANCE.fromCreateRequest(request);
+        Tag tag = HttpTagMapper.INSTANCE.fromCreateRequest(request);
         tagService.addTag(tag);
     }
 
     @PutMapping
     public void updateTag(@Valid @RequestBody UpdateTagRequest request) {
-        Tag tag = TagMapperHttp.INSTANCE.fromUpdateRequest(request);
+        Tag tag = HttpTagMapper.INSTANCE.fromUpdateRequest(request);
         tagService.updateTag(tag);
     }
 

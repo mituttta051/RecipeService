@@ -3,7 +3,7 @@ package cybercooker.recipeservice.advice;
 import cybercooker.recipeservice.exception.BaseException;
 import cybercooker.recipeservice.exception.NotValidRequestException;
 import cybercooker.recipeservice.exception.details.NotValidRequestDetails;
-import cybercooker.recipeservice.mapper.grpc.ErrorMapperHttp;
+import cybercooker.recipeservice.mapper.http.HttpErrorMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -19,7 +19,7 @@ public class GeneralAdvice {
 
     @ExceptionHandler(BaseException.class)
     public ResponseEntity<BaseException> serviceExceptionHandler(BaseException e) {
-        return ErrorMapperHttp.map(e);
+        return HttpErrorMapper.map(e);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

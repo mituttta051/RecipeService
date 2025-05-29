@@ -9,8 +9,8 @@ import org.mapstruct.factory.Mappers;
 import java.util.Map;
 
 @Mapper
-public interface TagMapperGrpc {
-    TagMapperGrpc INSTANCE = Mappers.getMapper(TagMapperGrpc.class);
+public interface GrpcTagMapper {
+    GrpcTagMapper INSTANCE = Mappers.getMapper(GrpcTagMapper.class);
 
     default TagGrpc toGrpc(Tag tag) {
         if (tag == null) {

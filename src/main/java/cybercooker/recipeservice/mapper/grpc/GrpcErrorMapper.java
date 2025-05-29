@@ -5,7 +5,7 @@ import cybercooker.recipeservice.exception.BaseException;
 import cybercooker.recipeservice.exception.NotFoundException;
 import io.grpc.Status;
 
-public class ErrorMapperGrpc {
+public class GrpcErrorMapper {
     public static Status map(BaseException exception) {
         return switch (exception) {
             case NotFoundException e -> Status.NOT_FOUND;

@@ -1,4 +1,4 @@
-package cybercooker.recipeservice.mapper.grpc;
+package cybercooker.recipeservice.mapper.http;
 
 import cybercooker.recipeservice.exception.AlreadyExistsException;
 import cybercooker.recipeservice.exception.BaseException;
@@ -6,7 +6,7 @@ import cybercooker.recipeservice.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-public class ErrorMapperHttp {
+public class HttpErrorMapper {
     public static ResponseEntity<BaseException> map(BaseException exception) {
         return switch (exception) {
             case NotFoundException e -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception);

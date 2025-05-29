@@ -7,10 +7,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
-public interface TagMapperHttp {
-    TagMapperHttp INSTANCE = Mappers.getMapper(TagMapperHttp.class);
+public interface HttpTagMapper {
+    HttpTagMapper INSTANCE = Mappers.getMapper(HttpTagMapper.class);
 
     Tag fromCreateRequest(CreateTagRequest request);
+
     Tag fromUpdateRequest(UpdateTagRequest request);
 }
 
